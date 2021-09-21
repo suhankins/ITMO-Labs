@@ -2,7 +2,8 @@
 #prep
 mkdir lab0
 cd lab0
-#Task 1
+
+#////////////Task 1////////////
 touch galvantula3
 echo "weight=31.5 height=31.0 atk=8 def=6" > galvantula3
 
@@ -48,7 +49,8 @@ cd ..
 
 touch sawsbuck5
 echo "Ходы  Bounce Giga Drain Last Resort Megahorn‡ Seed\nBomb Sleep Talk Snore Synthesis Worry Seed" > sawsbuck5
-#Task 2
+
+#////////////Task 2////////////
 chmod 620 galvantula3
 
 chmod 312 jigglypuff3
@@ -77,22 +79,23 @@ chmod 062 samurott2/mandibuzz
 chmod 400 samurott2/electivire
 
 chmod 400 sawsbuck5
-#Task 3
+
+#////////////Task 3////////////
 ln galvantula3 samurott2/duskullgalvantula
 
-#can't write into a directory if i can't even access it :/
+#FIX: permissions
 chmod 700 jigglypuff3/tentacool
 chmod 700 samurott2
 chmod 700 samurott2/cottonee
 chmod 700 samurott2/mandibuzz
 chmod 700 samurott2/duskull
 cp -r samurott2 jigglypuff3/tentacool
-#changing all the copied stuff to how it's supposed to be
+#Changing all the copied stuff to how it's supposed to be
 chmod 062 jigglypuff3/tentacool/samurott2/cottonee
 chmod 062 jigglypuff3/tentacool/samurott2/mandibuzz
 chmod 006 jigglypuff3/tentacool/samurott2/duskull
 chmod 317 jigglypuff3/tentacool/samurott2
-#changing all the original stuff to how it's supposed to be
+#Changing all the original stuff to how it's supposed to be
 chmod 062 samurott2/cottonee
 chmod 062 samurott2/mandibuzz
 chmod 006 samurott2/duskull
@@ -101,19 +104,19 @@ chmod 500 jigglypuff3/tentacool
 
 cp pelipper9 jigglypuff3/larvitarpelipper
 
-#tbh i'm kinda surprised that it works
 cp sawsbuck5 samurott2/yamask
 
 cat krookodile8/magcargo krookodile8/milotic > galvantula3_49
 
-#we need permission to write to krookodile8
+#FIX: permissions
 chmod 700 krookodile8
 ln -s pelipper9 krookodile8/magcargopelipper
 chmod 512 krookodile8
 
 ln -s jigglypuff3 Copy_2
-#Task 4
-#changing permissions again...
+
+#////////////Task 4////////////
+#FIX: permissions
 chmod 700 jigglypuff3
 chmod 700 jigglypuff3/spinarak
 chmod 700 jigglypuff3/tentacool/samurott2
@@ -123,9 +126,9 @@ chmod 700 krookodile8/mareep
 chmod 700 krookodile8/joltik
 chmod 700 samurott2
 chmod 700 samurott2/cottonee
-#find . -type f -name "*e" | wc -m > temp
-#sort -nr temp
-#and going back... again
+wc -l **/*r | sort -r
+ls -lR 2>/dev/null | grep 'e' | tail -n 3 | sort -r
+#Changing permissions back
 chmod 375 jigglypuff3/spinarak
 chmod 062 jigglypuff3/tentacool/samurott2/cottonee
 chmod 317 jigglypuff3/tentacool/samurott2
