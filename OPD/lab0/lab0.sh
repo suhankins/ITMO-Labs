@@ -1,20 +1,29 @@
 #!/bin/bash
-#prep
+
+#Variant 916
+
+#////////////Prep////////////
 mkdir lab0
 cd lab0
 
 #////////////Task 1////////////
 touch galvantula3
-echo "weight=31.5 height=31.0 atk=8 def=6" > galvantula3
+echo 'weight=31.5 height=31.0 atk=8 def=6' > galvantula3
 
 mkdir jigglypuff3
 cd jigglypuff3
 mkdir tentacool
+
 touch larvitar
-echo "Ходы\nAncientpower Body Slam Dark Pulse Double-Edge Earth Power Iron Defense\nIron Head Iron Tail Mud-Slap Outrage Sleep Talk Snore Spite Stealth\nRock Superpower Uproar" > larvitar
+echo 'Ходы' > larvitar
+echo 'Ancientpower Body Slam Dark Pulse Double-Edge Earth Power Iron Defense' >> larvitar
+echo 'larvitar Iron Head Iron Tail Mud-Slap Outrage Sleep Talk Snore Spite Stealth' >> larvitar
+echo 'Rock Superpower Uproar' >> larvitar
+
 mkdir braviary
 touch hitmonlee
-echo "satk=11 sdef=8\nspd=1" > hitmonlee
+echo 'satk=11 sdef=8' > hitmonlee
+echo 'spd=1' >> hitmonlee
 mkdir spinarak
 cd ..
 
@@ -23,46 +32,53 @@ cd krookodile8
 mkdir jolteon
 mkdir starmie
 touch magcargo
-echo "Развитые способности  Weak Armor" > magcargo
+echo 'Развитые способности  Weak Armor' > magcargo
 mkdir mareep
 mkdir joltik
 touch milotic
-echo "Способности\nWater Sport Refresh Water Pulse Twister Recover Captivate Aqua Tail\nRain Dance Hydro Pump Attract Safeguard Aqua Ring" > milotic
+echo 'Способности' > milotic
+echo 'Water Sport Refresh Water Pulse Twister Recover Captivate Aqua Tail' >> milotic
+echo 'Rain Dance Hydro Pump Attract Safeguard Aqua Ring' >> milotic
 cd ..
 
 touch pelipper9
-echo "satk=9\nsdef=7 spd=7" > pelipper9
+echo 'satk=9' > pelipper9
+echo 'sdef=7 spd=7' >> pelipper9
 
 mkdir samurott2
 cd samurott2
 touch cottonee
-echo "Тип покемона  GRASS NONE" > cottonee
+echo 'Тип покемона  GRASS NONE' > cottonee
 mkdir aggron
 touch duskull
-echo "Развитые\nспособности  Cursed Body" > duskull
+echo 'Развитые' > duskull
+echo 'способности  Cursed Body' >> duskull
 mkdir yamask
 touch mandibuzz
-echo "Живет  Desert\nMountain" > mandibuzz
+echo 'Живет  Desert' > mandibuzz 
+echo 'Mountain' >> mandibuzz
 touch electivire
-echo "Развитые способности  Motor Drive Vital\nSpirit" > electivire
+echo 'Развитые способности  Motor Drive Vital' > electivire
+echo 'Spirit' >> electivire
 cd ..
 
 touch sawsbuck5
-echo "Ходы  Bounce Giga Drain Last Resort Megahorn‡ Seed\nBomb Sleep Talk Snore Synthesis Worry Seed" > sawsbuck5
+echo 'Ходы  Bounce Giga Drain Last Resort Megahorn‡ Seed' > sawsbuck5 
+echo 'Bomb Sleep Talk Snore Synthesis Worry Seed' >> sawsbuck5
 
 #////////////Task 2////////////
-chmod 620 galvantula3
+chmod u=rw,g=w,o= galvantula3
 
-chmod 312 jigglypuff3
+chmod u=wx,g=x,o=w jigglypuff3
 chmod 500 jigglypuff3/tentacool
 chmod 440 jigglypuff3/larvitar
-chmod 537 jigglypuff3/braviary
-chmod 004 jigglypuff3/hitmonlee
-chmod 375 jigglypuff3/spinarak
+chmod u=rx,g=wx,o=rwx jigglypuff3/braviary
+chmod u=,g=,o=r jigglypuff3/hitmonlee
+chmod u=wx,g=rwx,o=rx jigglypuff3/spinarak
 
-chmod 512 krookodile8
+chmod u=rx,g=x,o=w krookodile8
 chmod 500 krookodile8/jolteon
-chmod 512 krookodile8/starmie
+chmod u=rx,g=x,o=w krookodile8/starmie
 chmod 620 krookodile8/magcargo
 chmod 337 krookodile8/mareep
 chmod 333 krookodile8/joltik
@@ -83,7 +99,7 @@ chmod 400 sawsbuck5
 #////////////Task 3////////////
 ln galvantula3 samurott2/duskullgalvantula
 
-#FIX: permissions
+#FIX: Permission denied
 chmod 700 jigglypuff3/tentacool
 chmod 700 samurott2
 chmod 700 samurott2/cottonee
@@ -108,7 +124,7 @@ cp sawsbuck5 samurott2/yamask
 
 cat krookodile8/magcargo krookodile8/milotic > galvantula3_49
 
-#FIX: permissions
+#FIX: Permission denied
 chmod 700 krookodile8
 ln -s pelipper9 krookodile8/magcargopelipper
 chmod 512 krookodile8
@@ -116,25 +132,12 @@ chmod 512 krookodile8
 ln -s jigglypuff3 Copy_2
 
 #////////////Task 4////////////
-#FIX: permissions
-chmod 700 jigglypuff3
-chmod 700 jigglypuff3/spinarak
-chmod 700 jigglypuff3/tentacool/samurott2
-chmod 700 jigglypuff3/tentacool/samurott2/cottonee
-chmod 700 jigglypuff3/hitmonlee
-chmod 700 krookodile8/mareep
-chmod 700 krookodile8/joltik
-chmod 700 samurott2
-chmod 700 samurott2/cottonee
-wc -l **/*r | sort -r
-ls -lR 2>/dev/null | grep 'e' | tail -n 3 | sort -r
-#Changing permissions back
-chmod 375 jigglypuff3/spinarak
-chmod 062 jigglypuff3/tentacool/samurott2/cottonee
-chmod 317 jigglypuff3/tentacool/samurott2
-chmod 004 jigglypuff3/hitmonlee
-chmod 312 jigglypuff3
-chmod 337 krookodile8/mareep
-chmod 333 krookodile8/joltik
-chmod 062 samurott2/cottonee
-chmod 317 samurott2
+#second grep is used to avoid printing krookodile8/starmie as it is not a file
+wc -m * */* */*/* */*/*/* 2> /dev/null | grep 'e$' | grep -v ' 0 ' | sort
+
+#second grep is used to avoid printing directories
+ls -R -t -1 -o 2> /dev/null | grep 'jo' | grep -v '/' 
+
+cat -n jigglypuff3/larvitar | sort -k 2
+#ERROR: cannot open jigglypuff3/hitmonlee
+cat -n jigglypuff3/hitmonlee 2> /dev/null | sort -k 2
