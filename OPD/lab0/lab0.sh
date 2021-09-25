@@ -141,3 +141,9 @@ ls -R -t -1 -o 2> /dev/null | grep 'jo' | grep -v '/'
 cat -n jigglypuff3/larvitar | sort -k 2
 #ERROR: cannot open jigglypuff3/hitmonlee
 cat -n jigglypuff3/hitmonlee 2> /dev/null | sort -k 2
+
+#grep is used to not print folder names
+#ERROR: Permission denied
+ls -R samurott2 2> /tmp/lab0log | grep -v ":" | sort
+
+ls -R -t -1 -o 2> /dev/null
