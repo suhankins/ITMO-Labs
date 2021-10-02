@@ -1,7 +1,3 @@
-#!/bin/bash
-
-#Variant 916
-
 #////////////Prep////////////
 mkdir lab0
 cd lab0
@@ -132,27 +128,21 @@ chmod 512 krookodile8
 ln -s jigglypuff3 Copy_2
 
 #////////////Task 4////////////
-#1
 #second grep is used to avoid printing krookodile8/starmie as it is not a file
 wc -m * */* */*/* */*/*/* 2> /dev/null | grep 'e$' | grep -v ' 0 ' | sort
 
-#2
 #second grep is used to avoid printing directories
 ls -R -t -1 -o 2> /dev/null | grep 'jo' | grep -v '/' 
 
-#3
 cat -n jigglypuff3/larvitar | sort -k 2
 #ERROR: cannot open jigglypuff3/hitmonlee
 cat -n jigglypuff3/hitmonlee 2> /dev/null | sort -k 2
 
-#4
 #ERROR: Permission denied
 ls -R samurott2 2> /tmp/lab0log | grep -v "\.:" | grep -v "\./" | sort
 
-#5
 ls -R -1 -o -r 2> /dev/null | grep -v "\.:" | grep -v "\./" | grep -v "total" | grep "." | head -n 3 | sort -k 2
 
-#6
 cat jigglypuff3/larvitar 2> /dev/null | grep -v -i "r$"
 cat jigglypuff3/hitmonlee 2> /dev/null | grep -v -i "r$"
 cat krookodile8/magcargo 2> /dev/null | grep -v -i "r$"
