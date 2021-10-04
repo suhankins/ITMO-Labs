@@ -128,21 +128,32 @@ chmod 512 krookodile8
 ln -s jigglypuff3 Copy_2
 
 #////////////Task 4////////////
+#creating some files because printing nothing is not too interesting
+touch joe
+echo "his name is joe" > joe
+touch lee
+echo "another file" > lee
 #second grep is used to avoid printing krookodile8/starmie as it is not a file
-wc -m * */* */*/* */*/*/* 2> /dev/null | grep 'e$' | grep -v ' 0 ' | sort
+echo "////////////1////////////"
+wc -m * */* */*/* */*/*/* 2> /dev/null | grep 'e$' | grep -v ' 0 ' | sort -r
 
 #second grep is used to avoid printing directories
-ls -R -t -1 -o 2> /dev/null | grep 'jo' | grep -v '/' 
+echo "////////////2////////////"
+ls -Rto -1 2> /tmp/lab0logs | grep 'jo' | grep -v '^d' 
 
+echo "////////////3////////////"
 cat -n jigglypuff3/larvitar | sort -k 2
 #ERROR: cannot open jigglypuff3/hitmonlee
 cat -n jigglypuff3/hitmonlee 2> /dev/null | sort -k 2
 
+echo "////////////4////////////"
 #ERROR: Permission denied
 ls -R samurott2 2> /tmp/lab0log | grep -v "\.:" | grep -v "\./" | sort
 
-ls -R -1 -o -r 2> /dev/null | grep -v "\.:" | grep -v "\./" | grep -v "total" | grep "." | head -n 3 | sort -k 2
+echo "////////////5////////////"
+ls -R -l 2> /dev/null | grep -v "\.:" | grep -v "\./" | grep -v "total" | grep -v '^d' | grep "." | head -n 3 | sort -k 2
 
+echo "////////////6////////////"
 cat jigglypuff3/larvitar 2> /dev/null | grep -v -i "r$"
 cat jigglypuff3/hitmonlee 2> /dev/null | grep -v -i "r$"
 cat krookodile8/magcargo 2> /dev/null | grep -v -i "r$"
