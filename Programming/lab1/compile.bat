@@ -1,0 +1,1 @@
+javac -classpath lab1;lab1/Pokemon.jar -d out -encoding "UTF-8" lab1/*.java lab1/pokemon/*.java lab1/moves/*.java
