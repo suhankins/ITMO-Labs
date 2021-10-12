@@ -18,7 +18,7 @@ public class Facade extends PhysicalMove {
 		//Also Facade makes it so Burn's effect of lowering attack doesn't count
 		if (currectStatus.equals(Status.BURN)) {
 			att.setStats(att.getStat(Stat.HP),
-						 att.getStat(Stat.ATTACK) + 2,
+						 att.getStat(Stat.ATTACK) * 2,
 						 att.getStat(Stat.DEFENSE),
 						 att.getStat(Stat.SPECIAL_ATTACK),
 						 att.getStat(Stat.SPECIAL_DEFENSE),
