@@ -12,8 +12,6 @@ public class WillOWisp extends StatusMove {
 	}
 	
 	public void applyOppEffects(Pokemon pokemon) {
-		//Why the hell is it called setCondition if
-		//it sets status?
 		Effect.burn(pokemon);
 	}
 }
