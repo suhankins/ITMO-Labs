@@ -5,7 +5,6 @@ import ru.ifmo.se.pokemon.*;
 public class Clefairy extends Cleffa {
     public Clefairy(String name, int level) {
 		super(name, level);
-        this.setType(Type.FAIRY);
 		this.setStats(70, 45, 48, 60, 65, 35);
 		this.setMove(new Quash(), new FireBlast(), new Pound());
     }
