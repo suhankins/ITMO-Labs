@@ -137,9 +137,9 @@ echo "another file" > lee
 echo "////////////1////////////"
 wc -m * */* */*/* */*/*/* 2> /dev/null | grep 'e$' | grep -v ' 0 ' | sort -r
 
-#second grep is used to avoid printing directories
+#second and third grep is used to avoid printing directories
 echo "////////////2////////////"
-ls -Rto -1 2> /tmp/lab0logs | grep 'jo' | grep -v '^d' 
+ls -Rto -1 2> /tmp/lab0logs | grep 'jo' | grep -v '^d' | grep -v "^\./"
 
 echo "////////////3////////////"
 cat -n jigglypuff3/larvitar | sort -k 2
@@ -147,18 +147,18 @@ cat -n jigglypuff3/larvitar | sort -k 2
 cat -n jigglypuff3/hitmonlee 2> /dev/null | sort -k 2
 
 echo "////////////4////////////"
-#ERROR: Permission denied
-ls -R samurott2 2> /tmp/lab0log | grep -v "\.:" | grep -v "\./" | sort
+#FIX: Permission denied
+#because you need to see that it works
+chmod 700 samurott2
+ls -R samurott2 2> /tmp/lab0log | grep -v "^\.:" | grep -v "\./" | grep -v ":$" | sort
+#returning it back
+chmod 317 samurott2
 
 echo "////////////5////////////"
 ls -R -l 2> /dev/null | grep -v "\.:" | grep -v "\./" | grep -v "total" | grep -v '^d' | grep "." | head -n 3 | sort -k 2
 
 echo "////////////6////////////"
-cat jigglypuff3/larvitar 2> /dev/null | grep -v -i "r$"
-cat jigglypuff3/hitmonlee 2> /dev/null | grep -v -i "r$"
-cat krookodile8/magcargo 2> /dev/null | grep -v -i "r$"
-cat krookodile8/milotic 2> /dev/null | grep -v -i "r$"
-cat samurott2/cottonee 2> /dev/null | grep -v -i "r$"
+cat jigglypuff3/larvitar jigglypuff3/hitmonlee krookodile8/magcargo krookodile8/milotic samurott2/cottonee 2> /dev/null | grep -v -i "r$"
 
 #////////////Task 5////////////
 #FIX: Permission denied
