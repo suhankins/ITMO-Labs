@@ -7,10 +7,11 @@ import re
 
 regex = r":<P"
 
-tests = ["blbalbal  balb :<Ps dfsdfs fs:(D@ XC:<DK:<P >SMAIJR: SO:<P) ):<><",
-         "Lorem ipsum dolor sit amet, :-) consectetur :<P adipiscing elit. :)",
-         "i really don't quite understand why we need 5 test :<",
-         "how are you anyways?", "i'm doing good:<P"]
+tests = ["blbalbal  balb :<P fs:(D@ XC:<DK :<P >SMAIJR: SO:<P) ):<><", #3
+         "Lorem ipsum sit, :-) consectetur :<P adipiscing elit. :)", #1
+         "i really don't quite understand why we need 5 test :<", #0
+         "how are you anyways?", #0
+         "i'm doing good:<P"] #1
 
 for test in tests:
     print(test)
