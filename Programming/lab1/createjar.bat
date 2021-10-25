@@ -1,0 +1,1 @@
+jar cfm Lab1.jar lab1/MANIFEST.MF info Pokemon.jar
