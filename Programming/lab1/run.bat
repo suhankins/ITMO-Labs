@@ -1,1 +1,1 @@
-java -classpath out;out/Pokemon.jar info.Lab1
+java -classpath .;Pokemon.jar info.Lab1

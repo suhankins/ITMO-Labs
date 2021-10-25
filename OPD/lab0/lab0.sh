@@ -135,7 +135,7 @@ touch lee
 echo "another file" > lee
 #second grep is used to avoid printing krookodile8/starmie as it is not a file
 echo "////////////1////////////"
-wc -m * */* */*/* */*/*/* 2> /dev/null | grep 'e$' | grep -v ' 0 ' | sort -r
+wc -m *e */*e */*/*e */*/*/*e 2> /dev/null | sort -r -k 1
 
 #second and third grep is used to avoid printing directories
 echo "////////////2////////////"
