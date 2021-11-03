@@ -13,6 +13,12 @@ tests = ["blbalbal  balb :<P fs:(D@ XC:<DK :<P >SMAIJR: SO:<P) ):<><", #3
          "how are you anyways?", #0
          "i'm doing good:<P"] #1
 
+#expected results:
+#3
+#1
+#0
+#0
+#1
+
 for test in tests:
-    print(test)
-    print(f"Found smiley faces: {len(re.findall(regex, test))}")
+    print(len(re.findall(regex, test)))
