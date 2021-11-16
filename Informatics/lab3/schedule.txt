@@ -1,0 +1,63 @@
+<tbody><tr><th class="day">
+												<script>$("#4day_btn").show();</script>
+												<span>Чт</span></th>                <td class="time">
+                    <span>08:20-09:50</span>
+                                            <div>15</div>
+                                        <dd class="rasp_aud_mobile">1512 ауд.</dd>
+                    <dt class="rasp_corp_mobile"><i class="fa fa-map-marker"></i><span>ул.Ломоносова, д.9, лит. М</span></dt>
+                </td>
+                <td class="room">
+                    <dl>
+                        <dd>1512 ауд.</dd>
+                        <dt><i class="fa fa-map-marker"></i><span>ул.Ломоносова, д.9, лит. М</span></dt>
+                    </dl>
+                </td>
+                <td class="lesson">
+                    <dl>
+                        <dd>Математика(Прак)</dd><dt><b>
+                                                                    Холодова Светлана Евгеньевна                                                                </b></dt>
+                    </dl>
+                </td><td class="lesson-format">Очно - дистанционный </td>
+                
+                </tr>
+                <tr><th class="day"></th>                <td class="time">
+                    <span>11:40-13:10</span>
+                                            <div>2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17</div>
+                                        <dd class="rasp_aud_mobile">1329 ауд.</dd>
+                    <dt class="rasp_corp_mobile"><i class="fa fa-map-marker"></i><span>ул.Ломоносова, д.9, лит. М</span></dt>
+                </td>
+                <td class="room">
+                    <dl>
+                        <dd>1329 ауд.</dd>
+                        <dt><i class="fa fa-map-marker"></i><span>ул.Ломоносова, д.9, лит. М</span></dt>
+                    </dl>
+                </td>
+                <td class="lesson">
+                    <dl>
+                        <dd>Математика(Прак)</dd><dt><b>
+                                                                    Холодова Светлана Евгеньевна                                                                </b></dt>
+                    </dl>
+                </td><td class="lesson-format">Очно - дистанционный </td>
+                
+                </tr>
+                <tr><th class="day"></th>                <td class="time">
+                    <span>13:30-15:00</span>
+                                            <div>2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17</div>
+                                        <dd class="rasp_aud_mobile">1222 ауд.</dd>
+                    <dt class="rasp_corp_mobile"><i class="fa fa-map-marker"></i><span>ул.Ломоносова, д.9, лит. М</span></dt>
+                </td>
+                <td class="room">
+                    <dl>
+                        <dd>1222 ауд.</dd>
+                        <dt><i class="fa fa-map-marker"></i><span>ул.Ломоносова, д.9, лит. М</span></dt>
+                    </dl>
+                </td>
+                <td class="lesson">
+                    <dl>
+                        <dd>Математика(Лек)</dd><dt><b>
+                                                                    Холодова Светлана Евгеньевна                                                                </b></dt>
+                    </dl>
+                </td><td class="lesson-format">Очно - дистанционный </td>
+                
+                </tr>
+                <tr></tr></tbody>
