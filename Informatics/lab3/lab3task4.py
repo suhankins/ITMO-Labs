@@ -1,6 +1,6 @@
 #ISU number: 338925
 #var 21
-#JSON to YAML
+#JSON to TSV
 
 def convert():
     f = open("schedule.json", encoding='unicode_escape')
