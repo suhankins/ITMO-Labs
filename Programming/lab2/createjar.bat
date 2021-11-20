@@ -1,0 +1,1 @@
+jar cfm Lab2.jar src/MANIFEST.MF hell

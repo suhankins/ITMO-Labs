@@ -3,7 +3,7 @@ package hell;
 import hell.rides.*;
 import hell.states.*;
 
-public class Shorty {
+public class Shorty implements Interactor {
     public int id;
     private static int shortiesCount = 0;
 
@@ -14,7 +14,12 @@ public class Shorty {
 
     public void interact(Ride ride) {
         if (!ride.canBeInteractedWith()) {
-            System.out.printf("Shorty %d coudldn't ride %s!", this.id, ride.getName());
+            if (Math.random() > 0.1) {
+                System.out.printf("Shorty %d coudldn't ride %s!%n", this.id, ride.getName());
+            } else {
+                ride.setCondition(true);
+                this.interact(ride);
+            }
         } else {
             String flavorText = "";
             switch(ride.interactionResult()){
@@ -53,5 +58,13 @@ public class Shorty {
     @Override
     public String toString() {
         return String.format("Shorty %d", this.id);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        return result;
     }
 }
