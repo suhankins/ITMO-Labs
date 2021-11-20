@@ -3,7 +3,7 @@
 #JSON to TSV
 
 def convert():
-    f = open("schedule.json", encoding='unicode_escape')
+    f = open("schedule.json")
     text = f.read()
     f.close()
 

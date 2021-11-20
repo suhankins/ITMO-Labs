@@ -5,7 +5,7 @@ file = open("schedule.txt", encoding="utf-8").read()
 
 spanRegex = r"(?<=<span>)(.*)(?=<\/span)"
 ddRegex = r"(?<=<dd>)(.*)(?=<\/dd)"
-lessonsRegex = r"(?<=<td class=\"lessons-format\">)(.*)(?=<\/td>)"
+lessonsRegex = r"(?<=<td class=\"lesson-format\">)(.*)(?=<\/td>)"
 divRegex = r"(?<=<div>)(.*)(?=<\/div>)"
 namesRegex = r"[А-я]+ [А-я]+ [А-я]+" #worked in my example *shrug*
 
@@ -39,7 +39,7 @@ for i in range(lessonsCount):
     print(names[i])         #teacher
     toJson["lessons"][-1]["teacher"] = names[i]
 
-result = json.dumps(toJson)
+result = json.dumps(toJson, ensure_ascii=False)
 f = open("schedule.json", "w")
 f.write(result)
 f.close()
