@@ -4,9 +4,7 @@ while True:
     x = []
     for i in range(0, len(a)):
         x.append(a[i])
-        print(i)
         if (i % 4 == 3 and not i == 1):
             x.append(".")
-            print(i, "<------")
 
     print("\t".join(x))
