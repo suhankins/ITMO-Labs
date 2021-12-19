@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: hell.Main
+Main-Class: planeflight.Main

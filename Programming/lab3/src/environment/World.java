@@ -1,4 +1,4 @@
-package planeflight;
+package planeflight.environment;
 
 public final class World {
     public static float temperature = 17.4f;
