@@ -7,7 +7,11 @@ package planeflight.entities;
 import planeflight.inventory.*;
 
 public abstract class EntityWithInventory extends Entity implements Inventory {
-    private Entity[] inventory = new Entity[3];
+    private Entity[] inventory;
+
+    public EntityWithInventory(int inventorySize) {
+        inventory = new Entity[inventorySize];
+    }
 
     public void clearInventory() {
         for (int i = 0; i < inventory.length; i++) {

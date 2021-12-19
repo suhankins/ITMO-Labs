@@ -7,12 +7,16 @@ package planeflight.entities;
 import planeflight.inventory.*;
 
 public class Human extends EntityWithInventory {
-    public Human(String name) {
+    public int age;
+
+    public Human(String name, int age) {
+        super(3);
+        
         this.setName(name);
-        System.out.printf(getName());
+        this.age = age;
     }
 
     public Human() {
-        this("Беззымянный");
+        this("Unnamed", 18);
     }
 }
