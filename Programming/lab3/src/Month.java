@@ -25,11 +25,11 @@ public enum Month {
     }
 
     public static Month nameOfNumber(int number) {
-    for (Month m : values()) {
-        if (m.number.equals(number)) {
-            return m;
+        for (Month m : values()) {
+            if (m.number == number) {
+                return m;
+            }
         }
+        return null;
     }
-    return null;
-}
 }
