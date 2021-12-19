@@ -1,1 +1,1 @@
-java planeflight.Main
+java -Dfile.encoding=UTF8 planeflight.Main

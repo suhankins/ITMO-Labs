@@ -10,9 +10,10 @@ package planeflight;
 
 import planeflight.entities.*;
 import planeflight.environment.*;
+import planeflight.inventory.*;
 
 public class Main {
     public static void main(String[] args) {
-        
+        Human human = new Human();
     }
 }

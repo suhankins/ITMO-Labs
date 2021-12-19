@@ -1,1 +1,1 @@
-javac -d . -encoding "UTF-8" src/*.java
+javac -d . src/*.java src/inventory/*.java src/entities/*.java src/environment/*.java
