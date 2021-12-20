@@ -1,11 +1,10 @@
-/**
-* Class for humans, duh
-*/
-
 package planeflight.entities;
 
 import planeflight.inventory.*;
 
+/**
+* Everything that has an inventory
+*/
 public abstract class EntityWithInventory extends Entity implements Inventory {
     private Entity[] inventory;
 
@@ -19,7 +18,10 @@ public abstract class EntityWithInventory extends Entity implements Inventory {
         }
     }
 
-    public void addToInventory(Entity item) {
+    public void addToInventory(Entity item) throws inventoryInvalidItemException {
+        if (item.getName().equals("News") | item.getName().equals("Plane")) {
+            throw new inventoryInvalidItemException("Entity types 'News' and 'Plane' cannot be stored in an inventory!");
+        }
         for (int i = 0; i < inventory.length; i++) {
             //The position is empty, we can put our new item there
             if (inventory[i] == null) {
@@ -73,5 +75,14 @@ public abstract class EntityWithInventory extends Entity implements Inventory {
 
     public Entity[] getInventory() {
         return inventory;
+    }
+
+    public int hasItem(String name) {
+        for (int i = 0; i < inventory.length; i++) {
+            if (inventory[i].getName().equals(name)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

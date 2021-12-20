@@ -1,11 +1,12 @@
+package planeflight.entities;
+
+import planeflight.environment.*;
+
 /**
 * Base class upon which every thing that
 * PHYSICALLY EXISTS is based on.
 */
-
-package planeflight.entities;
-
-public abstract class Entity {
+public abstract class Entity implements React {
     private String name;
 
     public void setName(String newName) {
@@ -14,5 +15,9 @@ public abstract class Entity {
 
     public String getName() {
         return this.name;
+    }
+
+    public void react(Location location) {
+
     }
 }
