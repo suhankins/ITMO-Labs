@@ -79,10 +79,17 @@ public abstract class EntityWithInventory extends Entity implements Inventory {
 
     public int hasItem(String name) {
         for (int i = 0; i < inventory.length; i++) {
-            if (inventory[i].getName().equals(name)) {
-                return i;
+            if (inventory[i] != null) {
+                if (inventory[i].getName().equals(name)) {
+                    return i;
+                }
             }
         }
         return -1;
+    }
+
+    @Override
+    public String toString() {
+        return getName() + ", carries: " + inventory.toString();
     }
 }

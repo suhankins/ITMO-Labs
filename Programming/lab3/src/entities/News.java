@@ -9,10 +9,10 @@ public final class News extends Entity {
     }
 
     /**
-     * Prints contents of the Mail object
-     * @param letter Mail object you want to be printed
+     * Prints contents of the string
+     * @param letter string you want to be printed
      */
-    public static void receive(Mail letter) {
-        System.out.println("News released bulletins about our crew flying by " + letter.toString());
+    public static void receive(String letter) {
+        System.out.println("News released bulletins about our crew flying by " + letter);
     }
 }

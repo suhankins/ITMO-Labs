@@ -20,4 +20,14 @@ public abstract class Entity implements React {
     public void react(Location location) {
 
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
+
+    @Override
+    public int hashCode() {
+        return 1 + name.hashCode();
+    }
 }
