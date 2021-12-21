@@ -92,4 +92,9 @@ public abstract class EntityWithInventory extends Entity implements Inventory {
     public String toString() {
         return getName() + ", carries: " + inventory.toString();
     }
+
+    @Override
+    public int hashCode() {
+        return 1 + getName().hashCode() + inventory.hashCode();
+     }
 }

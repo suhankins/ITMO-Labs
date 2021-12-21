@@ -20,6 +20,7 @@ public class Main {
         try {
             human.addToInventory(new Paper());
             plane.addToInventory(human);
+            System.out.println("I'm " + human.toString());
             plane.addToInventory(new Human("McTighe", 43));
             plane.addToInventory(new Human("Danforth", 56));
             plane.addToInventory(new Human("Lake", 40));
@@ -33,8 +34,8 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        while (plane.update()) {
+        plane.describe();
 
-        }
+        while (plane.update()) {}
     }
 }

@@ -13,10 +13,10 @@ public class Human extends EntityWithInventory {
     public void react(Location location) {
         switch(location) {
             case NOTHING:
-                System.out.println("Passenger " + getName() + " has a bas a bad feeling about this flight.");
+                if (Math.random() < 0.25) System.out.println("Passenger " + getName() + " has a bad feeling about this flight.");
                 break;
             default:
-                System.out.println("Passenger " + getName() + " is amazed at sight of " + location);
+                if (Math.random() < 0.75) System.out.println("Passenger " + getName() + " is amazed at sight of " + location);
                 addMemory(location);
                 break;
         }
@@ -75,5 +75,15 @@ public class Human extends EntityWithInventory {
      */
     public Human() {
         this("Unnamed", 18);
+    }
+
+    @Override
+    public String toString() {
+        return getName() + ", " + age + ", memories right now: " + memories[0] + ", " + memories[1] + ", " + memories[2];
+    }
+
+    @Override
+    public int hashCode() {
+        return 1 + getName().hashCode() + age * 2 + memories.hashCode() * 4;
     }
 }

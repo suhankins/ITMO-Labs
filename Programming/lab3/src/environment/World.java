@@ -41,9 +41,23 @@ public final class World {
         //Month and day
         result += Month.nameOfNumber(month).name() + " " + day;
         //Time
-        result += ", " + time / (60 * 60) + ":" + (time % (60 * 60)) / 60 + ". ";
+        result += ", " + zeropad(time / (60 * 60), 2) + ":" + zeropad((time % (60 * 60)) / 60, 2) + ":" + zeropad(time % 60, 2) + ". ";
         //Weater and temperature
         result += "Weather was " + weather + ", temperature was " + temperature + " degrees.";
         System.out.println(result);
+    }
+
+    /**
+     * 
+     * @param number
+     * @param length
+     * @return a zeropadded number
+     */
+    public static String zeropad(int number, int length) {
+        String toReturn = Integer.toString(number);
+        for (int i = toReturn.length(); i < length; i++) {
+            toReturn = "0" + toReturn;
+        }
+        return toReturn;
     }
 }

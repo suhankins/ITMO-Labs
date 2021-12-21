@@ -30,4 +30,16 @@ public abstract class Entity implements React {
     public int hashCode() {
         return 1 + name.hashCode();
     }
+
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Entity)) {
+            return false;
+        }
+        Entity s = (Entity)o;
+        return s.hashCode() == this.hashCode();
+    }
 }
