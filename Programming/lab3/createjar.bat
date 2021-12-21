@@ -1,1 +1,1 @@
-jar cfm Lab2.jar src/MANIFEST.MF hell
+jar cfm Lab3.jar src/MANIFEST.MF planeflight
