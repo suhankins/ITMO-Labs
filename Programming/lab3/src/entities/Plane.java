@@ -1,7 +1,5 @@
 package planeflight.entities;
 
-import java.util.spi.ToolProvider;
-
 import planeflight.environment.*;
 
 /**
