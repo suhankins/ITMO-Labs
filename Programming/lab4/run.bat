@@ -1,0 +1,1 @@
+java -Dfile.encoding=UTF8 assemblyline.Main
