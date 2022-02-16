@@ -1,4 +1,4 @@
-package assemblyline.Vehicles;
+package assemblyline;
 
 public enum FuelType {
     ELECTRICITY,
