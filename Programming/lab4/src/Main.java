@@ -17,11 +17,11 @@ public class Main {
      */
     final static String DEFAULT_FILENAME = "default.json";
     public static Scanner keyboard = new Scanner(System.in);
+    public static Hashtable<String, Vehicle> vehicleCollection = new Hashtable<String, Vehicle>();
 
     public static void main(String[] args) {
         //=============== Initilization ===============
         String[] userInput;
-        Hashtable<String, Vehicle> vehicleCollection = new Hashtable<String, Vehicle>();
         //=============== Save file loading routine ===============
         String filename;
         if (args.length > 0) {
@@ -54,8 +54,15 @@ public class Main {
                 } else {
                     Command.executeCommand(userInput[0]);
                 }
+            } catch(java.util.InputMismatchException e) {
+                System.out.printf("ERROR: Wrong type of data was inputed%n");
             } catch(Exception e) {
-                System.out.printf("ERROR: %s%n", e.getMessage());
+                //Apparently that can happen /shrug
+                if (e.getMessage() == null) {
+                    System.out.printf("ERROR: %s%n", e.getClass());
+                } else {
+                    System.out.printf("ERROR: %s%n", e.getMessage());
+                }
             }
         }
     }

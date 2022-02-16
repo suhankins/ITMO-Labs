@@ -3,7 +3,8 @@ package assemblyline;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import assemblyline.Vehicle.*;
+import assemblyline.FuelType;
+import assemblyline.VehicleType;
 
 /**
  * Class for commands
@@ -52,21 +53,43 @@ public class Command {
                     throw new NoArgumentGivenException();
                 }
 
+                //This code sucks but I don't care enough to make it look good
+
                 System.out.printf("Creating a new vehicle with '%s' key:%n", args[0]);
 
-                System.out.print("Name: ");
+                //I know that nextInt, nextLong and nextDouble exist, but using them leads to a bunch of problems
+                //with nextLine
+                
+                System.out.print("Name> ");
                 String name = assemblyline.Main.keyboard.nextLine();
-                System.out.print("X position (Double): ");
-                double x = assemblyline.Main.keyboard.nextDouble();
-                System.out.print("Y position (Long): ");
-                long y = assemblyline.Main.keyboard.nextLong();
+                System.out.print("X position (Double)> ");
+                double x = Double.parseDouble(assemblyline.Main.keyboard.nextLine());
+                System.out.print("Y position (Long)> ");
+                long y = Long.parseLong(assemblyline.Main.keyboard.nextLine());
                 Coordinates coordinates = new Coordinates(x, y);
-                System.out.print("Engine power (Integer): ");
-                int enginePower = assemblyline.Main.keyboard.nextInt();
-                System.out.print("Number of wheels (Integer): ");
-                int numberOfWheels = assemblyline.Main.keyboard.nextInt();
+                System.out.print("Engine power (Integer)> ");
+                int enginePower = Integer.parseInt(assemblyline.Main.keyboard.nextLine());
+                System.out.print("Number of wheels (Integer)> ");
+                int numberOfWheels = Integer.parseInt(assemblyline.Main.keyboard.nextLine());
 
-                //TODO: Finish vehicle creation
+                System.out.printf("%nVehicle types:%n");
+                for (int i = 0; i < VehicleType.values().length; i++) {
+                    System.out.println(VehicleType.values()[i]);
+                }
+                System.out.print("Vehicle type> ");
+                VehicleType vehicleType = VehicleType.valueOf(assemblyline.Main.keyboard.nextLine().toUpperCase().trim());
+
+                System.out.printf("%nFuel types:%n");
+                for (int i = 0; i < FuelType.values().length; i++) {
+                    System.out.println(FuelType.values()[i]);
+                }
+                System.out.print("Vehicle type> ");
+                FuelType fuelType = FuelType.valueOf(assemblyline.Main.keyboard.nextLine().toUpperCase().trim());
+
+                assemblyline.Main.vehicleCollection.put(args[0],
+                new Vehicle(name, coordinates, enginePower, numberOfWheels, vehicleType, fuelType));
+
+                System.out.println("Done!");
             }
 
             @Override

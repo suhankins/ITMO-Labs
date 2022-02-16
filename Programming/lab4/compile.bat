@@ -1,1 +1,1 @@
-javac -d . src/*.java src/Vehicles/*.java
+javac -d . src/*.java src/Vehicles/*.java -Xdiags:verbose
