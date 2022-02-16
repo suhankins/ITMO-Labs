@@ -78,7 +78,7 @@ public class Vehicle implements Comparable<Vehicle> {
 
         //Name cannot be empty. A space bar name is basically empty too if you think about it.
         if (name.isBlank()) {
-            throw new NotEmptyException();
+            throw new NotEmptyException("Name");
         }
 
         //These values must be higher than 0

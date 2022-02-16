@@ -2,6 +2,7 @@ package assemblyline;
 
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.Hashtable;
 
 /**
 * Lab4 Programming. Based on the description
@@ -15,11 +16,12 @@ public class Main {
      * Used when no parameter is given
      */
     final static String DEFAULT_FILENAME = "default.json";
+    public static Scanner keyboard = new Scanner(System.in);
 
     public static void main(String[] args) {
         //=============== Initilization ===============
-        Scanner keyboard = new Scanner(System.in);
         String[] userInput;
+        Hashtable<String, Vehicle> vehicleCollection = new Hashtable<String, Vehicle>();
         //=============== Save file loading routine ===============
         String filename;
         if (args.length > 0) {

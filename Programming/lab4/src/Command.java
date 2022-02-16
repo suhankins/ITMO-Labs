@@ -3,6 +3,8 @@ package assemblyline;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+import assemblyline.Vehicle.Coordinates;
+
 /**
  * Class for commands
  */
@@ -43,7 +45,35 @@ public class Command {
         });
         commandList.put("info", new Command());
         commandList.put("show", new Command());
-        commandList.put("insert", new Command());
+        commandList.put("insert", new Command(){
+            @Override
+            public void execute(String[] args) {
+                if (args.length == 0) {
+                    throw new NoArgumentGivenException();
+                }
+
+                System.out.printf("Creating a new vehicle with %s key:%n", args[0]);
+
+                System.out.print("Name: ");
+                String name = assemblyline.Main.keyboard.nextLine();
+                System.out.print("X position (Double): ");
+                double x = assemblyline.Main.keyboard.nextDouble();
+                System.out.print("Y position (Long): ");
+                double y = assemblyline.Main.keyboard.nextLong();
+                assemblyline.Vehicles.Coordinates coordinates = new assemblyline.Vehicles.Coordinates(x, y);
+                System.out.print("Engine power (Integer): ");
+                int enginePower = assemblyline.Main.keyboard.nextInt();
+                System.out.print("Number of wheels (Integer): ");
+                int numberOfWheels = assemblyline.Main.keyboard.nextInt();
+
+                //TODO: Finish vehicle creation
+            }
+
+            @Override
+            public String getHelp() {
+                return String.format("Insert a new vehicle with a specified key.%n%nUsage: insert [key]");
+            }
+        });
         commandList.put("update", new Command());
         commandList.put("remove_key", new Command());
         commandList.put("clear", new Command());
@@ -73,7 +103,7 @@ public class Command {
 
             @Override
             public String getHelp() {
-                return String.format("Prints 12 last executed commands.%n%nUsage: history");
+                return String.format("Prints 12 last successfully executed commands.%n%nUsage: history");
             }
         });
         commandList.put("replace_if_lower", new Command());
