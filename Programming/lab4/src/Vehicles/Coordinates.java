@@ -1,4 +1,6 @@
-package assemblyline.Vehicle;
+package assemblyline.Vehicles;
+
+import assemblyline.ValueOutOfRangeException;
 
 public class Coordinates {
     /**
@@ -11,6 +13,9 @@ public class Coordinates {
     private long y;
 
     public Coordinates(double x, long y) {
+        if (x > 591 || y > 387) {
+            throw new ValueOutOfRangeException();
+        }
         this.x = x;
         this.y = y;
     }

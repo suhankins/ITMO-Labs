@@ -1,6 +1,10 @@
-package assemblyline.Vehicle;
+package assemblyline.Vehicles;
 
-public class Vehicle {
+import assemblyline.NotEmptyException;
+import assemblyline.NotNullException;
+import assemblyline.ValueOutOfRangeException;
+
+public class Vehicle implements Comparable<Vehicle> {
     /**
      * Counts how many cars have already been created
      */
@@ -51,12 +55,35 @@ public class Vehicle {
      */
     private FuelType fuelType;
 
+    public Integer getId() {
+        return this.id;
+    }
+
+    /**
+     * Constructor.
+     * @param name <p>* Cannot be null</p><p>* Cannot be an empty string</p>
+     * @param coordinates <p>* Cannot be null</p>
+     * @param enginePower <p>* Must be more than 0</p>
+     * @param numberOfWheels <p>* Must be more than 0</p>
+     * @param vehicleType <p>* Cannot be null</p>
+     * @param fuelType <p>* Cannot be null</p>
+     */
     public Vehicle(String name, Coordinates coordinates, int enginePower,
                    int numberOfWheels, VehicleType vehicleType, FuelType fuelType)
     {
         //Is this how you're supposed to do it?
         if (name == null || coordinates == null || vehicleType == null || fuelType == null) {
             throw new NotNullException();
+        }
+
+        //Name cannot be empty. A space bar name is basically empty too if you think about it.
+        if (name.isBlank()) {
+            throw new NotEmptyException();
+        }
+
+        //These values must be higher than 0
+        if (enginePower <= 0 || numberOfWheels <= 0) {
+            throw new ValueOutOfRangeException();
         }
 
         counter += 1;
@@ -69,5 +96,19 @@ public class Vehicle {
         this.numberOfWheels = numberOfWheels;
         this.type = vehicleType;
         this.fuelType = fuelType;
+    }
+
+    @Override
+	public int compareTo(Vehicle e) {
+		return this.getId().compareTo(e.getId());
+	}
+
+    @Override
+    public String toString() {
+        String toReturn = String.format("%s - %s#%d%nCreation date: %s%nLocation: %s%nEngine Power: %d%nNumber of wheels: %d",
+                                        this.name, this.type, this.id, this.creationDate.toString(),
+                                        this.coordinates.toString(), this.enginePower, this.numberOfWheels);
+
+        return toReturn;
     }
 }

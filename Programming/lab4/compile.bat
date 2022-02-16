@@ -1,1 +1,1 @@
-javac -d . src/*.java src/Vehicle/*.java
+javac -d . src/*.java src/Vehicles/*.java

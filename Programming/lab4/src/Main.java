@@ -23,8 +23,13 @@ public class Main {
         }
         try {
             FileManager.loadSave(filename);
+        } catch (FeatureNotImplementedException exception) {
+            System.out.println("File loading routine is still not implemented! Implement it already, you idiot!");
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
+
+        //=============== Initial message ===============
+        System.out.printf("Lab4 assemblyline%nUse 'help' command to see list of commands.%n%n");
     }
 }

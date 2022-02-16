@@ -1,5 +1,8 @@
 package assemblyline;
 
+/**
+ * Class used for all things file managment 
+ */
 public class FileManager {
     /**
      * Loads list of created vehicles from requested file
