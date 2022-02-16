@@ -3,7 +3,7 @@ package assemblyline;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import assemblyline.Vehicle.Coordinates;
+import assemblyline.Vehicle.*;
 
 /**
  * Class for commands
@@ -52,15 +52,15 @@ public class Command {
                     throw new NoArgumentGivenException();
                 }
 
-                System.out.printf("Creating a new vehicle with %s key:%n", args[0]);
+                System.out.printf("Creating a new vehicle with '%s' key:%n", args[0]);
 
                 System.out.print("Name: ");
                 String name = assemblyline.Main.keyboard.nextLine();
                 System.out.print("X position (Double): ");
                 double x = assemblyline.Main.keyboard.nextDouble();
                 System.out.print("Y position (Long): ");
-                double y = assemblyline.Main.keyboard.nextLong();
-                assemblyline.Vehicles.Coordinates coordinates = new assemblyline.Vehicles.Coordinates(x, y);
+                long y = assemblyline.Main.keyboard.nextLong();
+                Coordinates coordinates = new Coordinates(x, y);
                 System.out.print("Engine power (Integer): ");
                 int enginePower = assemblyline.Main.keyboard.nextInt();
                 System.out.print("Number of wheels (Integer): ");
