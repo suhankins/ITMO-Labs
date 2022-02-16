@@ -83,7 +83,7 @@ public class Vehicle implements Comparable<Vehicle> {
 
         //These values must be higher than 0
         if (enginePower <= 0 || numberOfWheels <= 0) {
-            throw new ValueOutOfRangeException();
+            throw new ValueOutOfRangeException(0, false);
         }
 
         counter += 1;

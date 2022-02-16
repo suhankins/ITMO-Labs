@@ -1,5 +1,8 @@
 package assemblyline;
 
+import java.util.Scanner;
+import java.util.Arrays;
+
 /**
 * Lab4 Programming. Based on the description
 * you can find in text.docx file in the parent folder.
@@ -14,6 +17,9 @@ public class Main {
     final static String DEFAULT_FILENAME = "default.json";
 
     public static void main(String[] args) {
+        //=============== Initilization ===============
+        Scanner keyboard = new Scanner(System.in);
+        String[] userInput;
         //=============== Save file loading routine ===============
         String filename;
         if (args.length > 0) {
@@ -31,5 +37,24 @@ public class Main {
 
         //=============== Initial message ===============
         System.out.printf("Lab4 assemblyline%nUse 'help' command to see list of commands.%n%n");
+
+        //=============== Handling user imput ===============
+        while (true) {
+            System.out.print("> ");
+            userInput = keyboard.nextLine().split(" ");
+
+            //All commands are lower case and i don't want people to suffer from not knowing it
+            userInput[0] = userInput[0].toLowerCase();
+
+            try {
+                if (userInput.length > 1) {
+                    Command.executeCommand(userInput[0], Arrays.copyOfRange(userInput, 1, userInput.length));
+                } else {
+                    Command.executeCommand(userInput[0]);
+                }
+            } catch(Exception e) {
+                System.out.printf("ERROR: %s%n", e.getMessage());
+            }
+        }
     }
 }
