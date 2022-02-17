@@ -46,8 +46,39 @@ public class Command {
                 return String.format("Prints description of a command given in an argument.%n%nUsage: help [command]%n%nIf no arguments are given, prints list of existing commands.%n%nUsage: help");
             }
         });
-        commandList.put("info", new Command());
-        commandList.put("show", new Command());
+        commandList.put("info", new Command() {
+            @Override
+            public void execute(String[] args) {
+                if (assemblyline.Main.initializationDate == null) {
+                    System.out.println("Vehicle collection was never initialized.");
+                } else {
+                    System.out.printf("Type: %s%n", assemblyline.Main.vehicleCollection.getClass().getName());
+                    System.out.printf("Initialization date: %s%n", assemblyline.Main.initializationDate.toString());
+                    System.out.printf("Number of elements: %d%n", assemblyline.Main.vehicleCollection.size());
+                }
+            }
+
+            @Override
+            public String getHelp() {
+                return String.format("Prints information about current vehicle collection.%n%nUsage: info");
+            }
+        });
+        commandList.put("show", new Command() {
+            @Override
+            public void execute(String[] args) {
+                Enumeration keys = assemblyline.Main.vehicleCollection.keys();
+                System.out.println("List of vehicles:");
+                while (keys.hasMoreElements()) {
+                    String k = (String)keys.nextElement();
+                    System.out.printf("[%s] %s%n%n", k, assemblyline.Main.vehicleCollection.get(k).toString());
+                }
+            }
+
+            @Override
+            public String getHelp() {
+                return String.format("Prints list of vehicles.%n%nUsage: show");
+            }
+        });
         commandList.put("insert", new Command(){
             @Override
             public void execute(String[] args) {
@@ -55,7 +86,7 @@ public class Command {
                     throw new NoArgumentGivenException();
                 }
 
-                //This code sucks but I don't care enough to make it look good
+                //This code sucks but I don't care enough to make it look good.
                 //I know that nextInt, nextLong and nextDouble exist, but using them 
                 //leads to a bunch of problems with nextLine.
 
@@ -110,6 +141,7 @@ public class Command {
                 assemblyline.Main.vehicleCollection.put(args[0],
                 new Vehicle(name, coordinates, enginePower, numberOfWheels, vehicleType, fuelType));
 
+                assemblyline.Main.initializationDate = java.time.LocalDate.now();
                 System.out.println("Done!");
             }
 
