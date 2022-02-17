@@ -57,9 +57,38 @@ public class Vehicle implements Comparable<Vehicle> {
      */
     private FuelType fuelType;
 
+    //=============== Access to variables methods ===============
     public Integer getId() {
         return this.id;
     }
+    //=============== Access to variables methods END ===============
+
+    //=============== Check variable correctness ===============
+    public static void isNameCorrect(String name) {
+        if (name == null) throw new NotNullException("Name");
+        if (name.isBlank()) throw new NotEmptyException("Name");
+    }
+
+    public static void isCoordinatesCorrect(Coordinates coordinates) {
+        if (coordinates == null) throw new NotNullException("Coordinates");
+    }
+
+    public static void isVehicleTypeCorrect(VehicleType vehicleType) {
+        if (vehicleType == null) throw new NotNullException("Vehicle Type");
+    }
+
+    public static void isFuelTypeCorrect(FuelType fuelType) {
+        if (fuelType == null) throw new NotNullException("Fuel Type");
+    }
+
+    public static void isEnginePowerCorrect(int enginePower) {
+        if (enginePower <= 0) throw new ValueOutOfRangeException(0, false);
+    }
+
+    public static void isNumberOfWheelsCorrect(int numberOfWheels) {
+        if (numberOfWheels <= 0) throw new ValueOutOfRangeException(0, false);
+    }
+    //=============== Check variable correctness END ===============
 
     /**
      * Constructor.
@@ -73,20 +102,13 @@ public class Vehicle implements Comparable<Vehicle> {
     public Vehicle(String name, Coordinates coordinates, int enginePower,
                    int numberOfWheels, VehicleType vehicleType, FuelType fuelType)
     {
-        //Is this how you're supposed to do it?
-        if (name == null || coordinates == null || vehicleType == null || fuelType == null) {
-            throw new NotNullException();
-        }
-
-        //Name cannot be empty. A space bar name is basically empty too if you think about it.
-        if (name.isBlank()) {
-            throw new NotEmptyException("Name");
-        }
-
-        //These values must be higher than 0
-        if (enginePower <= 0 || numberOfWheels <= 0) {
-            throw new ValueOutOfRangeException(0, false);
-        }
+        //Looking at it now, maybe it was a bad idea...
+        isNameCorrect(name);
+        isCoordinatesCorrect(coordinates);
+        isEnginePowerCorrect(enginePower);
+        isNumberOfWheelsCorrect(numberOfWheels);
+        isVehicleTypeCorrect(vehicleType);
+        isFuelTypeCorrect(fuelType);
 
         counter += 1;
 
@@ -108,8 +130,8 @@ public class Vehicle implements Comparable<Vehicle> {
     @Override
     public String toString() {
         String toReturn = String.format("%s - %s#%d%nCreation date: %s%nLocation: %s%nEngine Power: %d%nNumber of wheels: %d",
-                                        this.name, this.type, this.id, this.creationDate.toString(),
-                                        this.coordinates.toString(), this.enginePower, this.numberOfWheels);
+            this.name, this.type, this.id, this.creationDate.toString(),
+            this.coordinates.toString(), this.enginePower, this.numberOfWheels);
 
         return toReturn;
     }

@@ -12,10 +12,20 @@ public class Coordinates {
      */
     private long y;
 
+    //=============== Check variable correctness ===============
+    public static void isXCorrect(double x) {
+        if (x > 591) throw new ValueOutOfRangeException(591, true, "X");
+    }
+
+    public static void isYCorrect(long y) {
+        if (y > 387) throw new ValueOutOfRangeException(387, true, "Y");
+    }
+    //=============== Check variable correctness END ===============
+
+
     public Coordinates(double x, long y) {
-        if (x > 591 || y > 387) {
-            throw new ValueOutOfRangeException();
-        }
+        isXCorrect(x);
+        isYCorrect(y);
         this.x = x;
         this.y = y;
     }

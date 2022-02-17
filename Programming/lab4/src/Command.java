@@ -5,6 +5,8 @@ import java.util.Hashtable;
 
 import assemblyline.FuelType;
 import assemblyline.VehicleType;
+import assemblyline.Vehicles.Coordinates;
+import assemblyline.Vehicles.Vehicle;
 
 /**
  * Class for commands
@@ -54,37 +56,56 @@ public class Command {
                 }
 
                 //This code sucks but I don't care enough to make it look good
+                //I know that nextInt, nextLong and nextDouble exist, but using them 
+                //leads to a bunch of problems with nextLine.
 
-                System.out.printf("Creating a new vehicle with '%s' key:%n", args[0]);
-
-                //I know that nextInt, nextLong and nextDouble exist, but using them leads to a bunch of problems
-                //with nextLine
+                System.out.printf("Creating a new vehicle with the '%s' key:%n", args[0]);
                 
+                //=============== Argument input section ===============
                 System.out.print("Name> ");
                 String name = assemblyline.Main.keyboard.nextLine();
+                Vehicle.isNameCorrect(name);
+
+                //=============== Coordinates input section ===============
                 System.out.print("X position (Double)> ");
                 double x = Double.parseDouble(assemblyline.Main.keyboard.nextLine());
+                Coordinates.isXCorrect(x);
+
                 System.out.print("Y position (Long)> ");
                 long y = Long.parseLong(assemblyline.Main.keyboard.nextLine());
+                Coordinates.isXCorrect(y);
+
                 Coordinates coordinates = new Coordinates(x, y);
+                //=============== Coordinates input section END ===============
+
                 System.out.print("Engine power (Integer)> ");
                 int enginePower = Integer.parseInt(assemblyline.Main.keyboard.nextLine());
+                Vehicle.isEnginePowerCorrect(enginePower);
+
                 System.out.print("Number of wheels (Integer)> ");
                 int numberOfWheels = Integer.parseInt(assemblyline.Main.keyboard.nextLine());
+                Vehicle.isNumberOfWheelsCorrect(numberOfWheels);
 
+                //=============== Vehicle type input ===============
                 System.out.printf("%nVehicle types:%n");
                 for (int i = 0; i < VehicleType.values().length; i++) {
                     System.out.println(VehicleType.values()[i]);
                 }
                 System.out.print("Vehicle type> ");
-                VehicleType vehicleType = VehicleType.valueOf(assemblyline.Main.keyboard.nextLine().toUpperCase().trim());
+                VehicleType vehicleType = VehicleType.valueOf(
+                    assemblyline.Main.keyboard.nextLine().toUpperCase().trim());
+                Vehicle.isVehicleTypeCorrect(vehicleType);
 
+                //=============== Fuel type input ===============
                 System.out.printf("%nFuel types:%n");
                 for (int i = 0; i < FuelType.values().length; i++) {
                     System.out.println(FuelType.values()[i]);
                 }
-                System.out.print("Vehicle type> ");
-                FuelType fuelType = FuelType.valueOf(assemblyline.Main.keyboard.nextLine().toUpperCase().trim());
+                System.out.print("Fuel Type> ");
+                FuelType fuelType = FuelType.valueOf(
+                    assemblyline.Main.keyboard.nextLine().toUpperCase().trim());
+                Vehicle.isFuelTypeCorrect(fuelType);
+                //=============== Argument input section END ===============
 
                 assemblyline.Main.vehicleCollection.put(args[0],
                 new Vehicle(name, coordinates, enginePower, numberOfWheels, vehicleType, fuelType));

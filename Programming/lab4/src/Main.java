@@ -3,6 +3,7 @@ package assemblyline;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.Hashtable;
+import assemblyline.Vehicles.Vehicle;
 
 /**
 * Lab4 Programming. Based on the description
