@@ -3,8 +3,6 @@ package assemblyline.Vehicles;
 import assemblyline.NotEmptyException;
 import assemblyline.NotNullException;
 import assemblyline.ValueOutOfRangeException;
-import assemblyline.VehicleType;
-import assemblyline.FuelType;
 
 public class Vehicle implements Comparable<Vehicle> {
     /**

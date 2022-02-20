@@ -3,8 +3,8 @@ package assemblyline;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import assemblyline.FuelType;
-import assemblyline.VehicleType;
+import assemblyline.Vehicles.FuelType;
+import assemblyline.Vehicles.VehicleType;
 import assemblyline.Vehicles.Coordinates;
 import assemblyline.Vehicles.Vehicle;
 
