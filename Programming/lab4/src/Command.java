@@ -150,7 +150,17 @@ public class Command {
                 return String.format("Insert a new vehicle with a specified key.%n%nUsage: insert [key]");
             }
         });
-        commandList.put("update", new Command());
+        commandList.put("update", new Command() {
+            @Override
+            public void execute(String[] args) {
+                System.exit(0);
+            }
+
+            @Override
+            public String getHelp() {
+                return String.format("Update vehicle's parameters with new data.%n%nUsage: update [id]");
+            }
+        });
         commandList.put("remove_key", new Command());
         commandList.put("clear", new Command());
         commandList.put("save", new Command());
