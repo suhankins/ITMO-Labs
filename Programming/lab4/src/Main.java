@@ -13,22 +13,12 @@ import assemblyline.Vehicles.Vehicle;
 * @since   2022-02-14 
 */
 public class Main {
-    /**
-     * Used when no parameter is given
-     */
-    final static String DEFAULT_FILENAME = "default.json";
     public static Scanner keyboard = new Scanner(System.in);
 
     public static void main(String[] args) {
         //=============== Initilization ===============
         String[] userInput;
         //=============== Save file loading routine ===============
-        String filename;
-        if (args.length > 0) {
-            filename = args[0];
-        } else {
-            filename = DEFAULT_FILENAME;
-        }
         try {
             FileManager.loadSave(filename);
         } catch (FeatureNotImplementedException exception) {

@@ -159,6 +159,11 @@ public class Vehicle implements Comparable<Vehicle> {
     }
     // =============== Set variables END ===============
 
+    /**
+     * Asks user to input all the required arguments for creating a new instance of a vehicle class.
+     * @param isRequired is it required that all parameters are inputed?
+     * @return a hashlist where key is a name of the variable and value is a corresponding object
+     */
     public static Hashtable<String, Object> inputArguments(boolean isRequired) {
         Hashtable<String, Object> toReturn = new Hashtable<String, Object>();
 

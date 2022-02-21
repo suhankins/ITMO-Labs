@@ -5,6 +5,10 @@ package assemblyline;
  */
 public class FileManager {
     /**
+     * Used when no parameter is given
+     */
+    final static String DEFAULT_FILENAME = "default.json";
+    /**
      * Loads list of created vehicles from requested file
      * @param filename name of the file from which vehicle list should be loaded
      */
