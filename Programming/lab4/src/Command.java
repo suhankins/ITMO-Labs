@@ -50,12 +50,12 @@ public class Command {
         commandList.put("info", new Command() {
             @Override
             public void execute(String[] args) {
-                if (assemblyline.Main.initializationDate == null) {
+                if (VehicleCollection.initializationDate == null) {
                     System.out.println("Vehicle collection was never initialized.");
                 } else {
-                    System.out.printf("Type: %s%n", assemblyline.Main.vehicleCollection.getClass().getName());
-                    System.out.printf("Initialization date: %s%n", assemblyline.Main.initializationDate.toString());
-                    System.out.printf("Number of elements: %d%n", assemblyline.Main.vehicleCollection.size());
+                    System.out.printf("Type: %s%n", VehicleCollection.vehicleCollection.getClass().getName());
+                    System.out.printf("Initialization date: %s%n", VehicleCollection.initializationDate.toString());
+                    System.out.printf("Number of elements: %d%n", VehicleCollection.vehicleCollection.size());
                 }
             }
 
@@ -68,11 +68,11 @@ public class Command {
         commandList.put("show", new Command() {
             @Override
             public void execute(String[] args) {
-                Enumeration keys = assemblyline.Main.vehicleCollection.keys();
+                Enumeration keys = VehicleCollection.vehicleCollection.keys();
                 System.out.println("List of vehicles:");
                 while (keys.hasMoreElements()) {
                     String k = (String)keys.nextElement();
-                    System.out.printf("[%s] %s%n%n", k, assemblyline.Main.vehicleCollection.get(k).toString());
+                    System.out.printf("[%s] %s%n%n", k, VehicleCollection.vehicleCollection.get(k).toString());
                 }
             }
 
@@ -93,57 +93,20 @@ public class Command {
 
                 System.out.printf("Creating a new vehicle with the '%s' key:%n", args[0]);
                 
-                //=============== Argument input section ===============
-                System.out.print("Name> ");
-                String name = assemblyline.Main.keyboard.nextLine();
-                Vehicle.isNameCorrect(name);
+                Hashtable<String, Object> listOfParams = Vehicle.inputArguments(true);
 
-                //=============== Coordinates input section ===============
-                System.out.print("X position (Double)> ");
-                double x = Double.parseDouble(assemblyline.Main.keyboard.nextLine());
-                Coordinates.isXCorrect(x);
-
-                System.out.print("Y position (Long)> ");
-                long y = Long.parseLong(assemblyline.Main.keyboard.nextLine());
-                Coordinates.isXCorrect(y);
-
-                Coordinates coordinates = new Coordinates(x, y);
-                //=============== Coordinates input section END ===============
-
-                System.out.print("Engine power (Integer)> ");
-                int enginePower = Integer.parseInt(assemblyline.Main.keyboard.nextLine());
-                Vehicle.isEnginePowerCorrect(enginePower);
-
-                System.out.print("Number of wheels (Integer)> ");
-                int numberOfWheels = Integer.parseInt(assemblyline.Main.keyboard.nextLine());
-                Vehicle.isNumberOfWheelsCorrect(numberOfWheels);
-
-                //=============== Vehicle type input ===============
-                System.out.printf("%nVehicle types:%n");
-                for (int i = 0; i < VehicleType.values().length; i++) {
-                    System.out.println(VehicleType.values()[i]);
-                }
-                System.out.print("Vehicle type> ");
-                VehicleType vehicleType = VehicleType.valueOf(
-                    assemblyline.Main.keyboard.nextLine().toUpperCase().trim());
-                Vehicle.isVehicleTypeCorrect(vehicleType);
-
-                //=============== Fuel type input ===============
-                System.out.printf("%nFuel types:%n");
-                for (int i = 0; i < FuelType.values().length; i++) {
-                    System.out.println(FuelType.values()[i]);
-                }
-                System.out.print("Fuel Type> ");
-                FuelType fuelType = FuelType.valueOf(
-                    assemblyline.Main.keyboard.nextLine().toUpperCase().trim());
-                Vehicle.isFuelTypeCorrect(fuelType);
-                //=============== Argument input section END ===============
-
-                assemblyline.Main.vehicleCollection.put(args[0],
-                new Vehicle(name, coordinates, enginePower, numberOfWheels, vehicleType, fuelType));
+                VehicleCollection.vehicleCollection.put(args[0],
+                    new Vehicle((String)listOfParams.get("name"),
+                    (Coordinates)listOfParams.get("coordinates"),
+                    (int)listOfParams.get("enginePower"),
+                    (int)listOfParams.get("numberOfWheels"),
+                    (VehicleType)listOfParams.get("vehicleType"),
+                    (FuelType)listOfParams.get("fuelType"))
+                );
                 
-                if (assemblyline.Main.initializationDate == null)
-                    assemblyline.Main.initializationDate = java.time.LocalDate.now();
+                //Setting initialization data since this is probably the first car in collection
+                if (VehicleCollection.initializationDate == null)
+                    VehicleCollection.initializationDate = java.time.LocalDate.now();
                 
                 System.out.println("Done!");
             }
@@ -158,11 +121,45 @@ public class Command {
             @Override
             public void execute(String[] args) {
                 isArgumentGiven(args);
+
+                Vehicle vehicle = VehicleCollection.getById(Integer.parseInt(args[0]));
+                if (vehicle == null) {
+                    throw new NullPointerException(String.format("Vehicle with ID %s does not exist.", args[0]));
+                }
+
+                Hashtable<String, Object> listOfParams = Vehicle.inputArguments(false);
+                Enumeration keys = listOfParams.keys();
+
+                //I really should consider finding a better way to do this...
+                while (keys.hasMoreElements()) {
+                    String k = (String)keys.nextElement();
+                    Object v = listOfParams.get(k);
+                    switch(k) {
+                        case "name":
+                            vehicle.setName((String)v);
+                            break;
+                        case "coordinates":
+                            vehicle.setCoordinates((Coordinates)v);
+                            break;
+                        case "enginePower":
+                            vehicle.setEnginePower((int)v);
+                            break;
+                        case "numberOfWheels":
+                            vehicle.setNumberOfWheels((int)v);
+                            break;
+                        case "vehicleType":
+                            vehicle.setVehicleType((VehicleType)v);
+                            break;
+                        case "fuelType":
+                            vehicle.setFuelType((FuelType)v);
+                            break;
+                    }
+                }
             }
 
             @Override
             public String getHelp() {
-                return String.format("Update vehicle's parameters with new data.%n%nUsage: update [id]");
+                return String.format("Update vehicle's parameters with new data.%nYou can skip parameters you don't want to update by inputting an empty string.%n%nUsage: update [id]");
             }
         });
 
@@ -199,7 +196,7 @@ public class Command {
                 return String.format("Prints 12 last successfully executed commands.%n%nUsage: history");
             }
         });
-        
+
         commandList.put("replace_if_lower", new Command());
         commandList.put("remove_lower_key", new Command());
         commandList.put("print_field_ascending_fuel_type", new Command());

@@ -18,8 +18,6 @@ public class Main {
      */
     final static String DEFAULT_FILENAME = "default.json";
     public static Scanner keyboard = new Scanner(System.in);
-    public static Hashtable<String, Vehicle> vehicleCollection = new Hashtable<String, Vehicle>();
-    public static java.time.LocalDate initializationDate = null;
 
     public static void main(String[] args) {
         //=============== Initilization ===============
