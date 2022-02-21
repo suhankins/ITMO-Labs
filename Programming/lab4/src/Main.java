@@ -20,7 +20,7 @@ public class Main {
         String[] userInput;
         //=============== Save file loading routine ===============
         try {
-            FileManager.loadSave(filename);
+            FileManager.loadSave(args.length > 0 ? args[0] : "");
         } catch (FeatureNotImplementedException exception) {
             System.out.println("File loading routine is still not implemented! Implement it already, you idiot!");
         } catch (Exception exception) {
