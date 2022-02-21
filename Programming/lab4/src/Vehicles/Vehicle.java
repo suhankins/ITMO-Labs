@@ -107,11 +107,12 @@ public class Vehicle implements Comparable<Vehicle> {
     // =============== Access to variables methods END ===============
 
     // =============== Check variable correctness ===============
-    public static void isNameCorrect(String name) {
+    public static boolean isNameCorrect(String name) {
         if (name == null)
-            throw new NotNullException("Name");
+            return false;
         if (name.isBlank())
-            throw new NotEmptyException("Name");
+            return false;
+        return true;
     }
     public static void isCoordinatesCorrect(Coordinates coordinates) {
         if (coordinates == null)
@@ -169,35 +170,71 @@ public class Vehicle implements Comparable<Vehicle> {
      */
     public static Hashtable<String, Object> inputArguments(boolean isRequired) {
         Hashtable<String, Object> toReturn = new Hashtable<String, Object>();
+        boolean correct = false;
+        String raw;
 
         //This code sucks but I don't care enough to make it look good.
         //I know that nextInt, nextLong and nextDouble exist, but using them 
         //leads to a bunch of problems with nextLine.
 
         // =============== Argument input section ===============
-        System.out.print("Name> ");
-        String raw = assemblyline.Main.keyboard.nextLine();
-        //if you inputed anything, we might as well check if it's correct
-        if (shouldCheck(isRequired, raw)) {
-            Vehicle.isNameCorrect(raw);
-            toReturn.put("name", raw);
+        while (!correct) {
+            System.out.print("Name> ");
+            raw = assemblyline.Main.keyboard.nextLine();
+            //if you inputed anything, we might as well check if it's correct
+            if (shouldCheck(isRequired, raw)) {
+                correct = Vehicle.isNameCorrect(raw);
+                if (correct) {
+                    toReturn.put("name", raw);
+                } else {
+                    System.out.println("ERROR: Incorrect string.");
+                }
+            } else {
+                correct = true;
+            }
         }
 
         // =============== Coordinates input section ===============
-        System.out.print("X position (Double)> ");
-        raw = assemblyline.Main.keyboard.nextLine();
+        correct = false;
         double x = 99999;
-        if (shouldCheck(isRequired, raw)) {
-            x = Double.parseDouble(raw);
-            Coordinates.isXCorrect(x);
+        while (!correct) {
+            System.out.print("X position (Double)> ");
+            raw = assemblyline.Main.keyboard.nextLine();
+            if (shouldCheck(isRequired, raw)) {
+                try {
+                    x = Double.parseDouble(raw);
+                    correct = Coordinates.isXCorrect(x);
+                    if (!correct) {
+                        System.out.printf("ERROR: Max value is %f.", Coordinates.MAX_X);
+                    }
+                } catch(Exception e) {
+                    System.out.printf("ERROR: %s%n", e.getMessage());
+                }
+            } else {
+                correct = true;
+                x = 99999;
+            }
         }
         
-        System.out.print("Y position (Long)> ");
-        raw = assemblyline.Main.keyboard.nextLine();
+        correct = false;
         long y = 99999;
-        if (shouldCheck(isRequired, raw)) {
-            y = Long.parseLong(raw);
-            Coordinates.isYCorrect(y);
+        while (!correct) {
+            System.out.print("Y position (Long)> ");
+            raw = assemblyline.Main.keyboard.nextLine();
+            if (shouldCheck(isRequired, raw)) {
+                try {
+                    y = Long.parseLong(raw);
+                    correct = Coordinates.isYCorrect(y);
+                    if (!correct) {
+                        System.out.printf("ERROR: Max value is %f.", Coordinates.MAX_Y);
+                    }
+                } catch(Exception e) {
+                    System.out.printf("ERROR: %s%n", e.getMessage());
+                }
+            } else {
+                correct = true;
+                y = 99999;
+            }
         }
 
         if (x < 99999 && y < 99999) {
@@ -214,7 +251,7 @@ public class Vehicle implements Comparable<Vehicle> {
         raw = assemblyline.Main.keyboard.nextLine();
         if (shouldCheck(isRequired, raw)) {
             int enginePower = Integer.parseInt(raw);
-            Vehicle.isEnginePowerCorrect(enginePower);
+            isEnginePowerCorrect(enginePower);
 
             toReturn.put("enginePower", enginePower);
         }
@@ -223,7 +260,7 @@ public class Vehicle implements Comparable<Vehicle> {
         raw = assemblyline.Main.keyboard.nextLine();
         if (shouldCheck(isRequired, raw)) {
             int numberOfWheels = Integer.parseInt(raw);
-            Vehicle.isNumberOfWheelsCorrect(numberOfWheels);
+            isNumberOfWheelsCorrect(numberOfWheels);
 
             toReturn.put("numberOfWheels", numberOfWheels);
         }
@@ -237,7 +274,7 @@ public class Vehicle implements Comparable<Vehicle> {
         raw = assemblyline.Main.keyboard.nextLine();
         if (shouldCheck(isRequired, raw)) {
             VehicleType vehicleType = VehicleType.valueOf(raw.toUpperCase().trim());
-            Vehicle.isVehicleTypeCorrect(vehicleType);
+            isVehicleTypeCorrect(vehicleType);
 
             toReturn.put("vehicleType", vehicleType);
         }
@@ -251,7 +288,7 @@ public class Vehicle implements Comparable<Vehicle> {
         raw = assemblyline.Main.keyboard.nextLine();
         if (shouldCheck(isRequired, raw)) {
             FuelType fuelType = FuelType.valueOf(raw.toUpperCase().trim());
-            Vehicle.isFuelTypeCorrect(fuelType);
+            isFuelTypeCorrect(fuelType);
 
             toReturn.put("fuelType", fuelType);
         }
