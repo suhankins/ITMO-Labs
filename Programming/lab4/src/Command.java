@@ -87,10 +87,6 @@ public class Command {
             public void execute(String[] args) {
                 isArgumentGiven(args);
 
-                //This code sucks but I don't care enough to make it look good.
-                //I know that nextInt, nextLong and nextDouble exist, but using them 
-                //leads to a bunch of problems with nextLine.
-
                 System.out.printf("Creating a new vehicle with the '%s' key:%n", args[0]);
                 
                 Hashtable<String, Object> listOfParams = Vehicle.inputArguments(true);
@@ -153,6 +149,12 @@ public class Command {
                         case "fuelType":
                             vehicle.setFuelType((FuelType)v);
                             break;
+                        case "x":
+                            vehicle.setCoordinates(new Coordinates((double)v, vehicle.getCoordinates().getY()));
+                            break;
+                        case "y":
+                            vehicle.setCoordinates(new Coordinates(vehicle.getCoordinates().getX(), (long)v));
+                            break;
                     }
                 }
             }
@@ -164,7 +166,21 @@ public class Command {
         });
 
         commandList.put("remove_key", new Command());
-        commandList.put("clear", new Command());
+
+        commandList.put("clear", new Command() {
+            @Override
+            public void execute(String[] args) {
+                VehicleCollection.vehicleCollection.clear();
+                VehicleCollection.initializationDate = null;
+                System.out.println("Vehicle collection has been cleared.");
+            }
+
+            @Override
+            public String getHelp() {
+                return String.format("Clears vehicle collection.%n%nUsage: clear");
+            }
+        });
+
         commandList.put("save", new Command());
         commandList.put("execute_script", new Command());
 

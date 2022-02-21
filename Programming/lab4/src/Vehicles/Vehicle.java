@@ -101,6 +101,9 @@ public class Vehicle implements Comparable<Vehicle> {
     public Integer getId() {
         return this.id;
     }
+    public Coordinates getCoordinates() {
+        return this.coordinates;
+    }
     // =============== Access to variables methods END ===============
 
     // =============== Check variable correctness ===============
@@ -167,6 +170,10 @@ public class Vehicle implements Comparable<Vehicle> {
     public static Hashtable<String, Object> inputArguments(boolean isRequired) {
         Hashtable<String, Object> toReturn = new Hashtable<String, Object>();
 
+        //This code sucks but I don't care enough to make it look good.
+        //I know that nextInt, nextLong and nextDouble exist, but using them 
+        //leads to a bunch of problems with nextLine.
+
         // =============== Argument input section ===============
         System.out.print("Name> ");
         String raw = assemblyline.Main.keyboard.nextLine();
@@ -196,6 +203,10 @@ public class Vehicle implements Comparable<Vehicle> {
         if (x < 99999 && y < 99999) {
             Coordinates coordinates = new Coordinates(x, y);
             toReturn.put("coordinates", coordinates);
+        } else if (x < 99999) {
+            toReturn.put("x", x);
+        } else if (y < 99999) {
+            toReturn.put("y", y);
         }
         // =============== Coordinates input section END ===============
 
