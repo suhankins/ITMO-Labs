@@ -46,6 +46,7 @@ public class Command {
                 return String.format("Prints description of a command given in an argument.%n%nUsage: help [command]%n%nIf no arguments are given, prints list of existing commands.%n%nUsage: help");
             }
         });
+
         commandList.put("info", new Command() {
             @Override
             public void execute(String[] args) {
@@ -63,6 +64,7 @@ public class Command {
                 return String.format("Prints information about current vehicle collection.%n%nUsage: info");
             }
         });
+
         commandList.put("show", new Command() {
             @Override
             public void execute(String[] args) {
@@ -79,12 +81,11 @@ public class Command {
                 return String.format("Prints list of vehicles.%n%nUsage: show");
             }
         });
+
         commandList.put("insert", new Command(){
             @Override
             public void execute(String[] args) {
-                if (args.length == 0) {
-                    throw new NoArgumentGivenException();
-                }
+                isArgumentGiven(args);
 
                 //This code sucks but I don't care enough to make it look good.
                 //I know that nextInt, nextLong and nextDouble exist, but using them 
@@ -140,8 +141,10 @@ public class Command {
 
                 assemblyline.Main.vehicleCollection.put(args[0],
                 new Vehicle(name, coordinates, enginePower, numberOfWheels, vehicleType, fuelType));
-
-                assemblyline.Main.initializationDate = java.time.LocalDate.now();
+                
+                if (assemblyline.Main.initializationDate == null)
+                    assemblyline.Main.initializationDate = java.time.LocalDate.now();
+                
                 System.out.println("Done!");
             }
 
@@ -150,10 +153,11 @@ public class Command {
                 return String.format("Insert a new vehicle with a specified key.%n%nUsage: insert [key]");
             }
         });
+
         commandList.put("update", new Command() {
             @Override
             public void execute(String[] args) {
-                System.exit(0);
+                isArgumentGiven(args);
             }
 
             @Override
@@ -161,10 +165,12 @@ public class Command {
                 return String.format("Update vehicle's parameters with new data.%n%nUsage: update [id]");
             }
         });
+
         commandList.put("remove_key", new Command());
         commandList.put("clear", new Command());
         commandList.put("save", new Command());
         commandList.put("execute_script", new Command());
+
         commandList.put("exit", new Command() {
             @Override
             public void execute(String[] args) {
@@ -176,6 +182,7 @@ public class Command {
                 return String.format("Closes the program.%n%nUsage: exit");
             }
         });
+
         commandList.put("history", new Command() {
             @Override
             public void execute(String[] args) {
@@ -192,6 +199,7 @@ public class Command {
                 return String.format("Prints 12 last successfully executed commands.%n%nUsage: history");
             }
         });
+        
         commandList.put("replace_if_lower", new Command());
         commandList.put("remove_lower_key", new Command());
         commandList.put("print_field_ascending_fuel_type", new Command());
@@ -240,6 +248,12 @@ public class Command {
      */
     public static boolean doesCommandExist(String name) {
         return commandList.containsKey(name);
+    }
+
+    public static void isArgumentGiven(String[] args) {
+        if (args.length == 0) {
+            throw new NoArgumentGivenException();
+        }
     }
 
     //=============== Instance methods ===============

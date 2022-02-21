@@ -40,7 +40,7 @@ public class Main {
         }
 
         //=============== Initial message ===============
-        System.out.printf("Lab4 assemblyline%nUse 'help' command to see list of commands.%n%n");
+        System.out.printf("Lab4 'assemblyline'%nUse 'help' command to see list of commands.%n%n");
 
         //=============== Handling user imput ===============
         while (true) {
