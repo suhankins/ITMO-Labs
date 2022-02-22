@@ -1,6 +1,6 @@
 package assemblyline.Vehicles;
 
-import assemblyline.ValueOutOfRangeException;
+import assemblyline.utils.ValueOutOfRangeException;
 
 public class Coordinates {
     public final static double MAX_X = 591;
@@ -28,8 +28,8 @@ public class Coordinates {
 
 
     public Coordinates(double x, long y) {
-        if (!isXCorrect(x)) throw new ValueOutOfRangeException();
-        if (!isYCorrect(y)) throw new ValueOutOfRangeException();
+        if (!isXCorrect(x)) throw new ValueOutOfRangeException((int)MAX_X, true, "X");
+        if (!isYCorrect(y)) throw new ValueOutOfRangeException((int)MAX_Y, true, "Y");
         this.x = x;
         this.y = y;
     }

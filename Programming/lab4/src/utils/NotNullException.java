@@ -1,4 +1,4 @@
-package assemblyline;
+package assemblyline.utils;
 
 public class NotNullException extends RuntimeException {
     public NotNullException(String name){

@@ -3,7 +3,9 @@ package assemblyline;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.Hashtable;
+
 import assemblyline.Vehicles.Vehicle;
+import assemblyline.utils.ErrorMessages;
 
 /**
 * Lab4 Programming. Based on the description
@@ -49,9 +51,9 @@ public class Main {
             } catch(Exception e) {
                 //Apparently that can happen /shrug
                 if (e.getMessage() == null) {
-                    System.out.printf("ERROR: %s%n", e.getClass());
+                    System.out.printf(ErrorMessages.TEMPLATE, e.getClass());
                 } else {
-                    System.out.printf("ERROR: %s%n", e.getMessage());
+                    System.out.printf(ErrorMessages.TEMPLATE, e.getMessage());
                 }
             }
         }

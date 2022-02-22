@@ -1,4 +1,4 @@
-package assemblyline;
+package assemblyline.utils;
 
 public class CommandDoesNotExistException extends RuntimeException {
     public CommandDoesNotExistException(String name){

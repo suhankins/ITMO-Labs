@@ -2,9 +2,10 @@ package assemblyline.Vehicles;
 
 import java.util.Hashtable;
 
-import assemblyline.NotEmptyException;
-import assemblyline.NotNullException;
-import assemblyline.ValueOutOfRangeException;
+import assemblyline.utils.ValueOutOfRangeException;
+import assemblyline.utils.NotEmptyException;
+import assemblyline.utils.NotNullException;
+import assemblyline.utils.ErrorMessages;
 
 public class Vehicle implements Comparable<Vehicle> {
     /**
@@ -108,57 +109,67 @@ public class Vehicle implements Comparable<Vehicle> {
 
     // =============== Check variable correctness ===============
     public static boolean isNameCorrect(String name) {
-        if (name == null)
-            return false;
-        if (name.isBlank())
-            return false;
+        if (name == null) return false;
+        if (name.isBlank()) return false;
         return true;
     }
-    public static void isCoordinatesCorrect(Coordinates coordinates) {
-        if (coordinates == null)
-            throw new NotNullException("Coordinates");
+    public static boolean isCoordinatesCorrect(Coordinates coordinates) {
+        if (coordinates == null) return false;
+        return true;
     }
-    public static void isEnginePowerCorrect(int enginePower) {
-        if (enginePower <= 0)
-            throw new ValueOutOfRangeException(0, false);
+    public static boolean isEnginePowerCorrect(int enginePower) {
+        if (enginePower <= 0) return false;
+        return true;
     }
-    public static void isNumberOfWheelsCorrect(int numberOfWheels) {
-        if (numberOfWheels <= 0)
-            throw new ValueOutOfRangeException(0, false);
+    public static boolean isNumberOfWheelsCorrect(int numberOfWheels) {
+        if (numberOfWheels <= 0) return false;
+        return true;
     }
-    public static void isVehicleTypeCorrect(VehicleType vehicleType) {
-        if (vehicleType == null)
-            throw new NotNullException("Vehicle Type");
+    public static boolean isVehicleTypeCorrect(VehicleType vehicleType) {
+        if (vehicleType == null) return false;
+        return true;
     }
-    public static void isFuelTypeCorrect(FuelType fuelType) {
-        if (fuelType == null)
-            throw new NotNullException("Fuel Type");
+    public static boolean isFuelTypeCorrect(FuelType fuelType) {
+        if (fuelType == null) return false;
+        return true;
     }
     // =============== Check variable correctness END ===============
 
     // =============== Set variables ===============
     public void setName(String name) {
-        isNameCorrect(name);
+        if (!isNameCorrect(name)) {
+            throw new NotEmptyException("Name");
+        }
         this.name = name;
     }
     public void setCoordinates(Coordinates coordinates) {
-        isCoordinatesCorrect(coordinates);
+        if (!isCoordinatesCorrect(coordinates)) {
+            throw new NotNullException("Coordinates");
+        }
         this.coordinates = coordinates;
     }
     public void setEnginePower(int enginePower) {
-        isEnginePowerCorrect(enginePower);
+        if (!isEnginePowerCorrect(enginePower)) {
+            throw new ValueOutOfRangeException(0, false, "Engine Power");
+        }
         this.enginePower = enginePower;
     }
     public void setNumberOfWheels(int numberOfWheels) {
-        isNumberOfWheelsCorrect(numberOfWheels);
+        if (!isNumberOfWheelsCorrect(numberOfWheels)) {
+            throw new ValueOutOfRangeException(0, false, "Number of wheels");
+        }
         this.numberOfWheels = numberOfWheels;
     }
     public void setVehicleType(VehicleType vehicleType) {
-        isVehicleTypeCorrect(vehicleType);
+        if (!isVehicleTypeCorrect(vehicleType)) {
+            throw new NotNullException("Vehicle type");
+        }
         this.type = vehicleType;
     }
     public void setFuelType(FuelType fuelType) {
-        isFuelTypeCorrect(fuelType);
+        if (!isFuelTypeCorrect(fuelType)) {
+            throw new NotNullException("Fuel type");
+        }
         this.fuelType = fuelType;
     }
     // =============== Set variables END ===============
@@ -177,6 +188,8 @@ public class Vehicle implements Comparable<Vehicle> {
         //I know that nextInt, nextLong and nextDouble exist, but using them 
         //leads to a bunch of problems with nextLine.
 
+        //21.02.2022 UPDATE: Wow, now it's even worse.
+
         // =============== Argument input section ===============
         while (!correct) {
             System.out.print("Name> ");
@@ -187,7 +200,7 @@ public class Vehicle implements Comparable<Vehicle> {
                 if (correct) {
                     toReturn.put("name", raw);
                 } else {
-                    System.out.println("ERROR: Incorrect string.");
+                    System.out.println(ErrorMessages.NAME_EMPTY);
                 }
             } else {
                 correct = true;
@@ -205,10 +218,11 @@ public class Vehicle implements Comparable<Vehicle> {
                     x = Double.parseDouble(raw);
                     correct = Coordinates.isXCorrect(x);
                     if (!correct) {
-                        System.out.printf("ERROR: Max value is %f.", Coordinates.MAX_X);
+                        //I'm not sure if this is a good idea...
+                        System.out.print(ErrorMessages.X_OUT_OF_RANGE);
                     }
                 } catch(Exception e) {
-                    System.out.printf("ERROR: %s%n", e.getMessage());
+                    System.out.printf(ErrorMessages.TEMPLATE, e.getMessage());
                 }
             } else {
                 correct = true;
@@ -226,10 +240,10 @@ public class Vehicle implements Comparable<Vehicle> {
                     y = Long.parseLong(raw);
                     correct = Coordinates.isYCorrect(y);
                     if (!correct) {
-                        System.out.printf("ERROR: Max value is %f.", Coordinates.MAX_Y);
+                        System.out.print(ErrorMessages.Y_OUT_OF_RANGE);
                     }
                 } catch(Exception e) {
-                    System.out.printf("ERROR: %s%n", e.getMessage());
+                    System.out.printf(ErrorMessages.TEMPLATE, e.getMessage());
                 }
             } else {
                 correct = true;
@@ -247,36 +261,74 @@ public class Vehicle implements Comparable<Vehicle> {
         }
         // =============== Coordinates input section END ===============
 
-        System.out.print("Engine power (Integer)> ");
-        raw = assemblyline.Main.keyboard.nextLine();
-        if (shouldCheck(isRequired, raw)) {
-            int enginePower = Integer.parseInt(raw);
-            isEnginePowerCorrect(enginePower);
+        correct = false;
+        while (!correct) {
+            System.out.print("Engine power (Integer)> ");
+            raw = assemblyline.Main.keyboard.nextLine();
+            if (shouldCheck(isRequired, raw)) {
+                try {
+                    int enginePower = Integer.parseInt(raw);
+                    correct = isEnginePowerCorrect(enginePower);
 
-            toReturn.put("enginePower", enginePower);
+                    if (correct) {
+                        toReturn.put("enginePower", enginePower);
+                    } else {
+                        System.out.print(ErrorMessages.ENGINE_POWER_OUT_OF_RANGE);
+                    }
+                } catch (Exception e) {
+                    System.out.printf(ErrorMessages.TEMPLATE, e.getMessage());
+                }
+            } else {
+                correct = true;
+            }
         }
 
-        System.out.print("Number of wheels (Integer)> ");
-        raw = assemblyline.Main.keyboard.nextLine();
-        if (shouldCheck(isRequired, raw)) {
-            int numberOfWheels = Integer.parseInt(raw);
-            isNumberOfWheelsCorrect(numberOfWheels);
-
-            toReturn.put("numberOfWheels", numberOfWheels);
-        }
+        correct = false;
+        while (!correct) {
+            System.out.print("Number of wheels (Integer)> ");
+            raw = assemblyline.Main.keyboard.nextLine();
+            if (shouldCheck(isRequired, raw)) {
+                try {
+                    int numberOfWheels = Integer.parseInt(raw);
+                    correct = isNumberOfWheelsCorrect(numberOfWheels);
+                    if (correct) {
+                        toReturn.put("numberOfWheels", numberOfWheels);
+                    } else {
+                        System.out.print(ErrorMessages.NUMBER_OF_WHEELS_OUT_OF_RANGE);
+                    }
+                } catch(Exception e) {
+                    System.out.printf(ErrorMessages.TEMPLATE, e.getMessage());
+                }
+            } else {
+                correct = true;
+            }
+        }  
 
         // =============== Vehicle type input ===============
         System.out.printf("%nVehicle types:%n");
         for (int i = 0; i < VehicleType.values().length; i++) {
             System.out.println(VehicleType.values()[i]);
         }
-        System.out.print("Vehicle type> ");
-        raw = assemblyline.Main.keyboard.nextLine();
-        if (shouldCheck(isRequired, raw)) {
-            VehicleType vehicleType = VehicleType.valueOf(raw.toUpperCase().trim());
-            isVehicleTypeCorrect(vehicleType);
 
-            toReturn.put("vehicleType", vehicleType);
+        correct = false;
+        while (!correct) {
+            System.out.print("Vehicle type> ");
+            raw = assemblyline.Main.keyboard.nextLine();
+            if (shouldCheck(isRequired, raw)) {
+                try {
+                    VehicleType vehicleType = VehicleType.valueOf(raw.toUpperCase().trim());
+                    correct = isVehicleTypeCorrect(vehicleType);
+                    if (correct) {
+                        toReturn.put("vehicleType", vehicleType);
+                    } else {
+                        System.out.print(ErrorMessages.CANNOT_BE_NULL);
+                    }
+                } catch(Exception e) {
+                    System.out.printf(ErrorMessages.TEMPLATE, e.getMessage());
+                }
+            } else {
+                correct = true;
+            }
         }
 
         // =============== Fuel type input ===============
@@ -284,13 +336,26 @@ public class Vehicle implements Comparable<Vehicle> {
         for (int i = 0; i < FuelType.values().length; i++) {
             System.out.println(FuelType.values()[i]);
         }
-        System.out.print("Fuel Type> ");
-        raw = assemblyline.Main.keyboard.nextLine();
-        if (shouldCheck(isRequired, raw)) {
-            FuelType fuelType = FuelType.valueOf(raw.toUpperCase().trim());
-            isFuelTypeCorrect(fuelType);
 
-            toReturn.put("fuelType", fuelType);
+        correct = false;
+        while (!correct) {
+            System.out.print("Fuel Type> ");
+            raw = assemblyline.Main.keyboard.nextLine();
+            if (shouldCheck(isRequired, raw)) {
+                try {
+                    FuelType fuelType = FuelType.valueOf(raw.toUpperCase().trim());
+                    correct = isFuelTypeCorrect(fuelType);
+                    if (correct) {
+                        toReturn.put("fuelType", fuelType);
+                    } else {
+                        System.out.print(ErrorMessages.CANNOT_BE_NULL);
+                    }
+                } catch(Exception e) {
+                    System.out.printf(ErrorMessages.TEMPLATE, e.getMessage());
+                }
+            } else {
+                correct = true;
+            }
         }
         // =============== Argument input section END ===============
 
@@ -312,13 +377,12 @@ public class Vehicle implements Comparable<Vehicle> {
      */
     public Vehicle(String name, Coordinates coordinates, int enginePower,
             int numberOfWheels, VehicleType vehicleType, FuelType fuelType) {
-        // Looking at it now, maybe it was a bad idea...
-        isNameCorrect(name);
-        isCoordinatesCorrect(coordinates);
-        isEnginePowerCorrect(enginePower);
-        isNumberOfWheelsCorrect(numberOfWheels);
-        isVehicleTypeCorrect(vehicleType);
-        isFuelTypeCorrect(fuelType);
+        if (!isNameCorrect(name)) throw new NotEmptyException("Name");
+        if (!isCoordinatesCorrect(coordinates)) throw new NotNullException("Coordinates");
+        if (!isEnginePowerCorrect(enginePower)) throw new ValueOutOfRangeException(1, false, "Engine Power");
+        if (!isNumberOfWheelsCorrect(numberOfWheels)) throw new ValueOutOfRangeException(1, false, "Number of wheels");
+        if (!isVehicleTypeCorrect(vehicleType)) throw new NotNullException("Vehicle type");
+        if (!isFuelTypeCorrect(fuelType)) throw new NotNullException("Fuel type");
 
         counter += 1;
 

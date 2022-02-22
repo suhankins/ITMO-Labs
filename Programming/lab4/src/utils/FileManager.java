@@ -1,4 +1,4 @@
-package assemblyline;
+package assemblyline.utils;
 
 /**
  * Class used for all things file managment 

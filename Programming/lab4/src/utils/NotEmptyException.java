@@ -1,4 +1,4 @@
-package assemblyline;
+package assemblyline.utils;
 
 public class NotEmptyException extends RuntimeException {
     public NotEmptyException(String name){

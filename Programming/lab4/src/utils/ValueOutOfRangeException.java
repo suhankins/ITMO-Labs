@@ -1,4 +1,4 @@
-package assemblyline;
+package assemblyline.utils;
 
 public class ValueOutOfRangeException extends RuntimeException {
     /**
@@ -14,7 +14,7 @@ public class ValueOutOfRangeException extends RuntimeException {
      * @param max is value max?
      */
     public ValueOutOfRangeException(int value, boolean max){
-        super(String.format("Given value out of required range. Value should be %s than %d", max ? "lower" : "higher", value));
+        super(String.format("Given value out of required range. %s value is %d", max ? "Maximum" : "Minimum", value));
     }
 
     /**
@@ -24,6 +24,6 @@ public class ValueOutOfRangeException extends RuntimeException {
      * @param name name of the variable
      */
     public ValueOutOfRangeException(int value, boolean max, String name){
-        super(String.format("Given value for %s out of required range. Value should be %s than %d", name, max ? "lower" : "higher", value));
+        super(String.format("Given value for %s out of required range. %s value is %d", name, max ? "Maximum" : "Minimum", value));
     }
 }

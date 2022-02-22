@@ -1,4 +1,4 @@
-package assemblyline;
+package assemblyline.utils;
 
 public class FeatureNotImplementedException extends RuntimeException {
     public FeatureNotImplementedException(){
