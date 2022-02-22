@@ -165,7 +165,25 @@ public class Command {
             }
         });
 
-        commandList.put("remove_key", new Command());
+        commandList.put("remove_key", new Command() {
+            @Override
+            public void execute(String[] args) {
+                isArgumentGiven(args);
+
+                if (!VehicleCollection.vehicleCollection.containsKey(args[0])) {
+                    throw new NullPointerException(String.format("%s key doesn't exist", args[0]));
+                }
+
+                VehicleCollection.vehicleCollection.remove(args[0]);
+
+                System.out.printf("%s key was removed.%n", args[0]);
+            }
+
+            @Override
+            public String getHelp() {
+                return String.format("Removes a vehicle with the specified key.%n%nUsage: remove_key [key]");
+            }
+        });
 
         commandList.put("clear", new Command() {
             @Override
