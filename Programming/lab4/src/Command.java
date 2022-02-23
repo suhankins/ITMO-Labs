@@ -93,7 +93,7 @@ public class Command {
 
                 VehicleCollection.vehicleCollection.put(args[0],
                     new Vehicle((String)listOfParams.get("name"),
-                    (Coordinates)listOfParams.get("coordinates"),
+                    new Coordinates((double)listOfParams.get("x"), (long)listOfParams.get("y")),
                     (int)listOfParams.get("enginePower"),
                     (int)listOfParams.get("numberOfWheels"),
                     (VehicleType)listOfParams.get("vehicleType"),
@@ -123,40 +123,7 @@ public class Command {
                     throw new NullPointerException(String.format("Vehicle with ID %s does not exist.", args[0]));
                 }
 
-                Hashtable<String, Object> listOfParams = Vehicle.inputArguments(false);
-                Enumeration keys = listOfParams.keys();
-
-                //I really should consider finding a better way to do this...
-                while (keys.hasMoreElements()) {
-                    String k = (String)keys.nextElement();
-                    Object v = listOfParams.get(k);
-                    switch(k) {
-                        case "name":
-                            vehicle.setName((String)v);
-                            break;
-                        case "coordinates":
-                            vehicle.setCoordinates((Coordinates)v);
-                            break;
-                        case "enginePower":
-                            vehicle.setEnginePower((int)v);
-                            break;
-                        case "numberOfWheels":
-                            vehicle.setNumberOfWheels((int)v);
-                            break;
-                        case "vehicleType":
-                            vehicle.setVehicleType((VehicleType)v);
-                            break;
-                        case "fuelType":
-                            vehicle.setFuelType((FuelType)v);
-                            break;
-                        case "x":
-                            vehicle.setCoordinates(new Coordinates((double)v, vehicle.getCoordinates().getY()));
-                            break;
-                        case "y":
-                            vehicle.setCoordinates(new Coordinates(vehicle.getCoordinates().getX(), (long)v));
-                            break;
-                    }
-                }
+                Vehicle.updateVehicle(vehicle, false);
             }
 
             @Override
@@ -231,7 +198,24 @@ public class Command {
             }
         });
 
-        commandList.put("replace_if_lower", new Command());
+        commandList.put("replace_if_lower", new Command() {
+            @Override
+            public void execute(String[] args) {
+                isArgumentGiven(args);
+                if (!VehicleCollection.vehicleCollection.containsKey(args[0])) {
+                    throw new NullPointerException(String.format("%s key doesn't exist", args[0]));
+                }
+                Vehicle vehicle = VehicleCollection.vehicleCollection.get(args[0]);
+
+                Vehicle.updateVehicle(vehicle, true);
+            }
+
+            @Override
+            public String getHelp() {
+                return String.format("Replace fields of a car stored at a given key if new values are lower.%n%nUsage: replace_if_lower [key]");
+            }
+        });
+
         commandList.put("remove_lower_key", new Command());
         commandList.put("print_field_ascending_fuel_type", new Command());
         commandList.put("print_field_descending_engine_power", new Command());

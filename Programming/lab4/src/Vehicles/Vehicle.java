@@ -1,6 +1,7 @@
 package assemblyline.Vehicles;
 
 import java.util.Hashtable;
+import java.util.Enumeration;
 
 import assemblyline.utils.ValueOutOfRangeException;
 import assemblyline.utils.NotEmptyException;
@@ -105,6 +106,18 @@ public class Vehicle implements Comparable<Vehicle> {
     public Coordinates getCoordinates() {
         return this.coordinates;
     }
+    public int getEnginePower() {
+        return enginePower;
+    }
+    public int getNumberOfWheels() {
+        return numberOfWheels;
+    }
+    public VehicleType getVehicleType() {
+        return type;
+    }
+    public FuelType getFuelType() {
+        return fuelType;
+    }
     // =============== Access to variables methods END ===============
 
     // =============== Check variable correctness ===============
@@ -177,11 +190,12 @@ public class Vehicle implements Comparable<Vehicle> {
     /**
      * Asks user to input all the required arguments for creating a new instance of a vehicle class.
      * @param isRequired is it required that all parameters are inputed?
+     * @param skip should name, vehicle type and fuel type be skipped?
      * @return a hashlist where key is a name of the variable and value is a corresponding object
      */
-    public static Hashtable<String, Object> inputArguments(boolean isRequired) {
+    public static Hashtable<String, Object> inputArguments(boolean isRequired, boolean skip) {
         Hashtable<String, Object> toReturn = new Hashtable<String, Object>();
-        boolean correct = false;
+        boolean correct = skip;
         String raw;
 
         //This code sucks but I don't care enough to make it look good.
@@ -218,8 +232,9 @@ public class Vehicle implements Comparable<Vehicle> {
                     x = Double.parseDouble(raw);
                     correct = Coordinates.isXCorrect(x);
                     if (!correct) {
-                        //I'm not sure if this is a good idea...
                         System.out.print(ErrorMessages.X_OUT_OF_RANGE);
+                    } else {
+                        toReturn.put("x", x);
                     }
                 } catch(Exception e) {
                     System.out.printf(ErrorMessages.TEMPLATE, e.getMessage());
@@ -231,7 +246,7 @@ public class Vehicle implements Comparable<Vehicle> {
         }
         
         correct = false;
-        long y = 99999;
+        long y = 0;
         while (!correct) {
             System.out.print("Y position (Long)> ");
             raw = assemblyline.Main.keyboard.nextLine();
@@ -241,23 +256,15 @@ public class Vehicle implements Comparable<Vehicle> {
                     correct = Coordinates.isYCorrect(y);
                     if (!correct) {
                         System.out.print(ErrorMessages.Y_OUT_OF_RANGE);
+                    } else {
+                        toReturn.put("y", y);
                     }
                 } catch(Exception e) {
                     System.out.printf(ErrorMessages.TEMPLATE, e.getMessage());
                 }
             } else {
                 correct = true;
-                y = 99999;
             }
-        }
-
-        if (x < 99999 && y < 99999) {
-            Coordinates coordinates = new Coordinates(x, y);
-            toReturn.put("coordinates", coordinates);
-        } else if (x < 99999) {
-            toReturn.put("x", x);
-        } else if (y < 99999) {
-            toReturn.put("y", y);
         }
         // =============== Coordinates input section END ===============
 
@@ -305,12 +312,14 @@ public class Vehicle implements Comparable<Vehicle> {
         }  
 
         // =============== Vehicle type input ===============
-        System.out.printf("%nVehicle types:%n");
-        for (int i = 0; i < VehicleType.values().length; i++) {
-            System.out.println(VehicleType.values()[i]);
+        if (!skip) {
+            System.out.printf("%nVehicle types:%n");
+            for (int i = 0; i < VehicleType.values().length; i++) {
+                System.out.println(VehicleType.values()[i]);
+            }
         }
 
-        correct = false;
+        correct = skip;
         while (!correct) {
             System.out.print("Vehicle type> ");
             raw = assemblyline.Main.keyboard.nextLine();
@@ -332,12 +341,14 @@ public class Vehicle implements Comparable<Vehicle> {
         }
 
         // =============== Fuel type input ===============
-        System.out.printf("%nFuel types:%n");
-        for (int i = 0; i < FuelType.values().length; i++) {
-            System.out.println(FuelType.values()[i]);
+        if (!skip) {
+            System.out.printf("%nFuel types:%n");
+            for (int i = 0; i < FuelType.values().length; i++) {
+                System.out.println(FuelType.values()[i]);
+            }
         }
 
-        correct = false;
+        correct = skip;
         while (!correct) {
             System.out.print("Fuel Type> ");
             raw = assemblyline.Main.keyboard.nextLine();
@@ -364,6 +375,81 @@ public class Vehicle implements Comparable<Vehicle> {
 
     public static boolean shouldCheck(boolean isRequired, String string) {
         return isRequired || !string.isBlank();
+    }
+
+    /**
+     * Asks user to input all the required arguments for creating a new instance of a vehicle class.
+     * @param isRequired is it required that all parameters are inputed?
+     * @return a hashlist where key is a name of the variable and value is a corresponding object
+     */
+    public static Hashtable<String, Object> inputArguments(boolean isRequired) {
+        return inputArguments(isRequired, false);
+    }
+
+    public static void updateVehicle(Vehicle vehicle, boolean ifLower) {
+        Hashtable<String, Object> listOfParams = Vehicle.inputArguments(false, ifLower);
+        Enumeration keys = listOfParams.keys();
+        Coordinates coordinates = vehicle.getCoordinates();
+
+        //I really should consider finding a better way to do this...
+        while (keys.hasMoreElements()) {
+            String k = (String)keys.nextElement();
+            Object v = listOfParams.get(k);
+            switch(k) {
+                case "name":
+                    vehicle.setName((String)v);
+                    System.out.println("Name updated");
+                    break;
+                case "enginePower":
+                    int enginePower = (int)v;
+                    if (ifLower) {
+                        if (vehicle.getEnginePower() =< enginePower) {
+                            break;
+                        }
+                    }
+                    vehicle.setEnginePower(enginePower);
+                    System.out.println("Engine power updated");
+                    break;
+                case "numberOfWheels":
+                    int numberOfWheels = (int)v;
+                    if (ifLower) {
+                        if (vehicle.getNumberOfWheels() =< numberOfWheels) {
+                            break;
+                        }
+                    }
+                    vehicle.setNumberOfWheels(numberOfWheels);
+                    System.out.println("Number of wheels updated");
+                    break;
+                case "vehicleType":
+                    vehicle.setVehicleType((VehicleType)v);
+                    System.out.println("Vehicle type updated");
+                    break;
+                case "fuelType":
+                    vehicle.setFuelType((FuelType)v);
+                    System.out.println("Fuel type updated");
+                    break;
+                case "x":
+                    double x = (double)v;
+                    if (ifLower) {
+                        if (coordinates.getX() =< x) {
+                            break;
+                        }
+                    }
+                    vehicle.setCoordinates(new Coordinates(x, coordinates.getY()));
+                    System.out.println("X updated");
+                    break;
+                case "y":
+                    long y = (long)v;
+                    if (ifLower) {
+                        if (coordinates.getY() =< y) {
+                            break;
+                        }
+                    }
+                    vehicle.setCoordinates(new Coordinates(coordinates.getX(), y));
+                    System.out.println("Y updated");
+                    break;
+            }
+        }
     }
 
     /**
