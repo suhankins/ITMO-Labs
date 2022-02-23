@@ -223,12 +223,19 @@ public class Command {
             @Override
             public void execute(String[] args) {
                 isArgumentGiven(args);
-                if (!VehicleCollection.vehicleCollection.containsKey(args[0])) {
-                    throw new NullPointerException(String.format("%s key doesn't exist", args[0]));
-                }
-                Vehicle vehicle = VehicleCollection.vehicleCollection.get(args[0]);
 
-                Vehicle.updateVehicle(vehicle, true);
+                int key = Integer.parseInt(args[0]);
+
+                Enumeration keys = VehicleCollection.vehicleCollection.keys();
+                System.out.printf("Removing keys lower than %d:%n", key);
+                while (keys.hasMoreElements()) {
+                    int k = (int)keys.nextElement();
+                    if (k < key) {
+                        VehicleCollection.vehicleCollection.remove(k);
+                        System.out.printf("Key %d was removed%n", k);
+                    }
+                }
+                System.out.printf("Every key lower than %d has been successfully removed.%n", key);
             }
 
             @Override
