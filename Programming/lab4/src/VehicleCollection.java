@@ -13,7 +13,7 @@ public class VehicleCollection {
     /**
      * Hashtable where vehicles are stored.
      */
-    public static Hashtable<String, Vehicle> vehicleCollection = new Hashtable<String, Vehicle>();
+    public static Hashtable<Integer, Vehicle> vehicleCollection = new Hashtable<Integer, Vehicle>();
     public static java.time.LocalDate initializationDate = null;
 
     /**
@@ -25,7 +25,7 @@ public class VehicleCollection {
         Enumeration keys = vehicleCollection.keys();
 
         while (keys.hasMoreElements()) {
-            String k = (String)keys.nextElement();
+            int k = (int)keys.nextElement();
             if (vehicleCollection.get(k).getId() == id) {
                 return vehicleCollection.get(k);
             }

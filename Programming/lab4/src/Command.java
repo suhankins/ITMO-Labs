@@ -71,8 +71,8 @@ public class Command {
                 Enumeration keys = VehicleCollection.vehicleCollection.keys();
                 System.out.println("List of vehicles:");
                 while (keys.hasMoreElements()) {
-                    String k = (String)keys.nextElement();
-                    System.out.printf("[%s] %s%n%n", k, VehicleCollection.vehicleCollection.get(k).toString());
+                    int k = (int)keys.nextElement();
+                    System.out.printf("[%d] %s%n%n", k, VehicleCollection.vehicleCollection.get(k).toString());
                 }
             }
 
@@ -87,11 +87,13 @@ public class Command {
             public void execute(String[] args) {
                 isArgumentGiven(args);
 
-                System.out.printf("Creating a new vehicle with the '%s' key:%n", args[0]);
+                int key = Integer.parseInt(args[0]);
+
+                System.out.printf("Creating a new vehicle with the '%d' key:%n", key);
                 
                 Hashtable<String, Object> listOfParams = Vehicle.inputArguments(true);
 
-                VehicleCollection.vehicleCollection.put(args[0],
+                VehicleCollection.vehicleCollection.put(key,
                     new Vehicle((String)listOfParams.get("name"),
                     new Coordinates((double)listOfParams.get("x"), (long)listOfParams.get("y")),
                     (int)listOfParams.get("enginePower"),
@@ -137,13 +139,15 @@ public class Command {
             public void execute(String[] args) {
                 isArgumentGiven(args);
 
-                if (!VehicleCollection.vehicleCollection.containsKey(args[0])) {
-                    throw new NullPointerException(String.format("%s key doesn't exist", args[0]));
+                int key = Integer.parseInt(args[0]);
+
+                if (!VehicleCollection.vehicleCollection.containsKey(key)) {
+                    throw new NullPointerException(String.format("%d key doesn't exist", key));
                 }
 
-                VehicleCollection.vehicleCollection.remove(args[0]);
+                VehicleCollection.vehicleCollection.remove(key);
 
-                System.out.printf("%s key was removed.%n", args[0]);
+                System.out.printf("%d key was removed.%n", key);
             }
 
             @Override
@@ -184,11 +188,10 @@ public class Command {
         commandList.put("history", new Command() {
             @Override
             public void execute(String[] args) {
-                for (int i = 0; i < history.length; i++) {
-                    if (history[i] == null) {
-                        break;
+                for (int i = 11; i >= 0; i--) {
+                    if (history[i] != null) {
+                        System.out.println(history[i]);
                     }
-                    System.out.println(history[i]);
                 }
             }
 
@@ -216,7 +219,23 @@ public class Command {
             }
         });
 
-        commandList.put("remove_lower_key", new Command());
+        commandList.put("remove_lower_key", new Command() {
+            @Override
+            public void execute(String[] args) {
+                isArgumentGiven(args);
+                if (!VehicleCollection.vehicleCollection.containsKey(args[0])) {
+                    throw new NullPointerException(String.format("%s key doesn't exist", args[0]));
+                }
+                Vehicle vehicle = VehicleCollection.vehicleCollection.get(args[0]);
+
+                Vehicle.updateVehicle(vehicle, true);
+            }
+
+            @Override
+            public String getHelp() {
+                return String.format("Replace fields of a car stored at a given key if new values are lower.%n%nUsage: replace_if_lower [key]");
+            }
+        });
         commandList.put("print_field_ascending_fuel_type", new Command());
         commandList.put("print_field_descending_engine_power", new Command());
         commandList.put("print_field_descending_number_of_wheels", new Command());
