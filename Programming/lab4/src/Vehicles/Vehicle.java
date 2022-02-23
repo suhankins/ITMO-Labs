@@ -386,6 +386,11 @@ public class Vehicle implements Comparable<Vehicle> {
         return inputArguments(isRequired, false);
     }
 
+    /**
+     * Asks for user input to update given vehicle's fields.
+     * @param vehicle
+     * @param ifLower only update fields if given value is lower
+     */
     public static void updateVehicle(Vehicle vehicle, boolean ifLower) {
         Hashtable<String, Object> listOfParams = Vehicle.inputArguments(false, ifLower);
         Enumeration keys = listOfParams.keys();

@@ -265,6 +265,10 @@ public class Command {
         return commandList.containsKey(name);
     }
 
+    /**
+     * Checks if argument was given. Throws NoArgumentGivenException if not.
+     * @param args
+     */
     public static void isArgumentGiven(String[] args) {
         if (args.length == 0) {
             throw new NoArgumentGivenException();
