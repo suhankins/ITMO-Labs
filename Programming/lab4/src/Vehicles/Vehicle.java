@@ -403,7 +403,7 @@ public class Vehicle implements Comparable<Vehicle> {
                 case "enginePower":
                     int enginePower = (int)v;
                     if (ifLower) {
-                        if (vehicle.getEnginePower() =< enginePower) {
+                        if (vehicle.getEnginePower() <= enginePower) {
                             break;
                         }
                     }
@@ -413,7 +413,7 @@ public class Vehicle implements Comparable<Vehicle> {
                 case "numberOfWheels":
                     int numberOfWheels = (int)v;
                     if (ifLower) {
-                        if (vehicle.getNumberOfWheels() =< numberOfWheels) {
+                        if (vehicle.getNumberOfWheels() <= numberOfWheels) {
                             break;
                         }
                     }
@@ -431,7 +431,7 @@ public class Vehicle implements Comparable<Vehicle> {
                 case "x":
                     double x = (double)v;
                     if (ifLower) {
-                        if (coordinates.getX() =< x) {
+                        if (coordinates.getX() <= x) {
                             break;
                         }
                     }
@@ -441,7 +441,7 @@ public class Vehicle implements Comparable<Vehicle> {
                 case "y":
                     long y = (long)v;
                     if (ifLower) {
-                        if (coordinates.getY() =< y) {
+                        if (coordinates.getY() <= y) {
                             break;
                         }
                     }
