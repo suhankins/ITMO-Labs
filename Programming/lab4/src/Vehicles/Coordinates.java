@@ -25,20 +25,32 @@ public class Coordinates {
         return true;
     }
     //=============== Check variable correctness END ===============
+    
+    // =============== Access to variables methods ===============
+    public double getX() {
+        return x;
+    }
+    public long getY() {
+        return y;
+    }
+    // =============== Access to variables methods END ===============
 
+    // =============== Set variables ===============
+    public void setX(double x) {
+        if (!isXCorrect(x)) throw new ValueOutOfRangeException((int)MAX_X, true, "X");
+        this.x = x;
+    }
+    public void setY(long y) {
+        if (!isYCorrect(y)) throw new ValueOutOfRangeException((int)MAX_Y, true, "Y");
+        this.y = y;
+    }
+    // =============== Set variables END ===============
 
     public Coordinates(double x, long y) {
         if (!isXCorrect(x)) throw new ValueOutOfRangeException((int)MAX_X, true, "X");
         if (!isYCorrect(y)) throw new ValueOutOfRangeException((int)MAX_Y, true, "Y");
         this.x = x;
         this.y = y;
-    }
-
-    public double getX() {
-        return x;
-    }
-    public long getY() {
-        return y;
     }
 
     @Override

@@ -214,7 +214,7 @@ public class Vehicle implements Comparable<Vehicle> {
                 if (correct) {
                     toReturn.put("name", raw);
                 } else {
-                    System.out.println(ErrorMessages.NAME_EMPTY);
+                    System.out.print(ErrorMessages.NAME_EMPTY);
                 }
             } else {
                 correct = true;
@@ -440,7 +440,7 @@ public class Vehicle implements Comparable<Vehicle> {
                             break;
                         }
                     }
-                    vehicle.setCoordinates(new Coordinates(x, coordinates.getY()));
+                    coordinates.setX(x);
                     System.out.println("X updated");
                     break;
                 case "y":
@@ -450,7 +450,7 @@ public class Vehicle implements Comparable<Vehicle> {
                             break;
                         }
                     }
-                    vehicle.setCoordinates(new Coordinates(coordinates.getX(), y));
+                    coordinates.setY(y);
                     System.out.println("Y updated");
                     break;
             }

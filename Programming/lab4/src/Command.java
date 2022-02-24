@@ -205,10 +205,14 @@ public class Command {
             @Override
             public void execute(String[] args) {
                 isArgumentGiven(args);
-                if (!VehicleCollection.vehicleCollection.containsKey(args[0])) {
+
+                int key = Integer.parseInt(args[0]);
+
+                if (!VehicleCollection.vehicleCollection.containsKey(key)) {
                     throw new NullPointerException(String.format("%s key doesn't exist", args[0]));
                 }
-                Vehicle vehicle = VehicleCollection.vehicleCollection.get(args[0]);
+
+                Vehicle vehicle = VehicleCollection.vehicleCollection.get(key);
 
                 Vehicle.updateVehicle(vehicle, true);
             }
