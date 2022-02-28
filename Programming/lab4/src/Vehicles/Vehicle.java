@@ -494,9 +494,8 @@ public class Vehicle implements Comparable<Vehicle> {
 
     @Override
     public String toString() {
-        String toReturn = String.format("%s - %s #%d%nCreation date: %s%nLocation: %s%nEngine Power: %d%nNumber of wheels: %d",
-            this.name, this.type, this.id, this.creationDate.toString(),
-            this.coordinates.toString(), this.enginePower, this.numberOfWheels);
+        String toReturn = String.format("%s - %s #%d%nFuel type: %s%nLocation: %s%nEngine Power: %d%nNumber of wheels: %d%nCreation date: %s",
+            this.name, this.type, this.id, this.fuelType, this.coordinates.toString(), this.enginePower, this.numberOfWheels, this.creationDate.toString());
 
         return toReturn;
     }

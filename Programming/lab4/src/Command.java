@@ -311,7 +311,33 @@ public class Command {
                 return String.format("Prints engine power of every vehicle in descending order.%n%nUsage: print_field_descending_engine_power");
             }
         });
-        commandList.put("print_field_descending_number_of_wheels", new Command());
+        commandList.put("print_field_descending_number_of_wheels", new Command() {
+            @Override
+            public void execute(String[] args) {
+                if (VehicleCollection.isEmpty()) {
+                    System.out.println(ErrorMessages.COLLECTION_IS_EMPTY);
+                    return;
+                }
+                Vehicle[] vehicles = VehicleCollection.toArray();
+                //Sort the array
+                Arrays.sort(vehicles, new Comparator<Vehicle>() {
+                    @Override
+                    public int compare(Vehicle v1, Vehicle v2) {
+                        //This way we basically sort it in descending order
+                        return v2.getNumberOfWheels() - v1.getNumberOfWheels();
+                    }
+                });
+                //Print it!
+                for (int i = 0; i < vehicles.length; i++) {
+                    System.out.printf("[%s #%d] Number of wheels: %d%n", vehicles[i].getVehicleType(), vehicles[i].getId(), vehicles[i].getNumberOfWheels());
+                }
+            }
+
+            @Override
+            public String getHelp() {
+                return String.format("Prints number of wheels of every vehicle in descending order.%n%nUsage: print_field_descending_number_of_wheels");
+            }
+        });
     }
 
     /**
