@@ -14,6 +14,9 @@ public class VehicleCollection {
      * Hashtable where vehicles are stored.
      */
     public static Hashtable<Integer, Vehicle> vehicleCollection = new Hashtable<Integer, Vehicle>();
+    /**
+     * If null - vehicle collection was never initialized.
+     */
     public static java.time.LocalDate initializationDate = null;
 
     /**
@@ -32,5 +35,26 @@ public class VehicleCollection {
         }
         
         return null;
+    }
+
+    public static boolean isEmpty() {
+        return vehicleCollection.size() == 0;
+    }
+
+    /**
+     * Return an array with every vehicle. Keys get lost, sadly.
+     * @return Array of vehicles in the collection
+     */
+    public static Vehicle[] toArray() {
+        //This is ridiculous
+        Vehicle[] vehicles = new Vehicle[VehicleCollection.vehicleCollection.size()];
+        Enumeration keys = VehicleCollection.vehicleCollection.keys();
+        //Here we put stuff from hashtable into an array
+        for (int i = 0; i < vehicles.length; i++) {
+            int k = (int)keys.nextElement();
+            vehicles[i] = VehicleCollection.vehicleCollection.get(k);
+        }
+
+        return vehicles;
     }
 }

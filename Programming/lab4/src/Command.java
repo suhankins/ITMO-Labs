@@ -5,10 +5,12 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import assemblyline.Vehicles.FuelType;
-import assemblyline.Vehicles.VehicleType;
 import assemblyline.Vehicles.Coordinates;
+import assemblyline.Vehicles.FuelType;
 import assemblyline.Vehicles.Vehicle;
+import assemblyline.Vehicles.VehicleType;
+
+import assemblyline.utils.ErrorMessages;
 
 /**
  * Class for commands
@@ -230,6 +232,10 @@ public class Command {
             @Override
             public void execute(String[] args) {
                 isArgumentGiven(args);
+                if (VehicleCollection.isEmpty()) {
+                    System.out.println(ErrorMessages.COLLECTION_IS_EMPTY);
+                    return;
+                }
 
                 int key = Integer.parseInt(args[0]);
 
@@ -253,24 +259,23 @@ public class Command {
         commandList.put("print_field_ascending_fuel_type", new Command() {
             @Override
             public void execute(String[] args) {
-                //This is ridiculous
-                Vehicle[] vehicles = new Vehicle[VehicleCollection.vehicleCollection.size()];
-                Enumeration keys = VehicleCollection.vehicleCollection.keys();
-                //Here we put stuff from hashtable into an array
-                for (int i = 0; i < vehicles.length; i++) {
-                    int k = (int)keys.nextElement();
-                    vehicles[i] = VehicleCollection.vehicleCollection.get(k);
+                if (VehicleCollection.vehicleCollection.isEmpty()) {
+                    System.out.println(ErrorMessages.COLLECTION_IS_EMPTY);
+                    return;
                 }
+                Vehicle[] vehicles = VehicleCollection.toArray();
                 //Sort the array
                 Arrays.sort(vehicles, new Comparator<Vehicle>() {
                     @Override
                     public int compare(Vehicle v1, Vehicle v2) {
-                        return v1.getFuelType().compareTo(v2.getFuelType());
+                        //To print stuff in *ascending* order i just multiply result by -1
+                        //Should work just fine
+                        return v1.getFuelType().compareTo(v2.getFuelType()) * -1;
                     }
                 });
                 //Print it!
                 for (int i = 0; i < vehicles.length; i++) {
-                    System.out.printf("[%s #%d] %s%n", vehicles[i].getVehicleType(), vehicles[i].getId(), vehicles[i].getFuelType());
+                    System.out.printf("[%s #%d] Fuel type: %s%n", vehicles[i].getVehicleType(), vehicles[i].getId(), vehicles[i].getFuelType());
                 }
             }
 
@@ -279,7 +284,33 @@ public class Command {
                 return String.format("Prints fuel types of every vehicle in ascending order.%n%nUsage: print_field_ascending_fuel_type");
             }
         });
-        commandList.put("print_field_descending_engine_power", new Command());
+        commandList.put("print_field_descending_engine_power", new Command() {
+            @Override
+            public void execute(String[] args) {
+                if (VehicleCollection.isEmpty()) {
+                    System.out.println(ErrorMessages.COLLECTION_IS_EMPTY);
+                    return;
+                }
+                Vehicle[] vehicles = VehicleCollection.toArray();
+                //Sort the array
+                Arrays.sort(vehicles, new Comparator<Vehicle>() {
+                    @Override
+                    public int compare(Vehicle v1, Vehicle v2) {
+                        //This way we basically sort it in descending order
+                        return v2.getEnginePower() - v1.getEnginePower();
+                    }
+                });
+                //Print it!
+                for (int i = 0; i < vehicles.length; i++) {
+                    System.out.printf("[%s #%d] Engine power: %d%n", vehicles[i].getVehicleType(), vehicles[i].getId(), vehicles[i].getEnginePower());
+                }
+            }
+
+            @Override
+            public String getHelp() {
+                return String.format("Prints engine power of every vehicle in descending order.%n%nUsage: print_field_descending_engine_power");
+            }
+        });
         commandList.put("print_field_descending_number_of_wheels", new Command());
     }
 

@@ -28,7 +28,7 @@ public class Vehicle implements Comparable<Vehicle> {
      * * Must be more than 0
      * </p>
      */
-    private Integer id;
+    private int id;
     /**
      * <p>
      * Vehicle's name
@@ -489,13 +489,13 @@ public class Vehicle implements Comparable<Vehicle> {
 
     @Override
 	public int compareTo(Vehicle e) {
-		return this.getId().compareTo(e.getId());
+		return this.getId() - e.getId();
 	}
 
     @Override
     public String toString() {
-        String toReturn = String.format("%s #%d - %s%nCreation date: %s%nLocation: %s%nEngine Power: %d%nNumber of wheels: %d",
-            this.name, this.id, this.type, this.creationDate.toString(),
+        String toReturn = String.format("%s - %s #%d%nCreation date: %s%nLocation: %s%nEngine Power: %d%nNumber of wheels: %d",
+            this.name, this.type, this.id, this.creationDate.toString(),
             this.coordinates.toString(), this.enginePower, this.numberOfWheels);
 
         return toReturn;
