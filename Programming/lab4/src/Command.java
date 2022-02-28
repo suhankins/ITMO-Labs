@@ -1,5 +1,7 @@
 package assemblyline;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -170,6 +172,7 @@ public class Command {
             }
         });
 
+        //TODO: these two
         commandList.put("save", new Command());
         commandList.put("execute_script", new Command());
 
@@ -247,7 +250,35 @@ public class Command {
                 return String.format("Replace fields of a car stored at a given key if new values are lower.%n%nUsage: replace_if_lower [key]");
             }
         });
-        commandList.put("print_field_ascending_fuel_type", new Command());
+        commandList.put("print_field_ascending_fuel_type", new Command() {
+            @Override
+            public void execute(String[] args) {
+                //This is ridiculous
+                Vehicle[] vehicles = new Vehicle[VehicleCollection.vehicleCollection.size()];
+                Enumeration keys = VehicleCollection.vehicleCollection.keys();
+                //Here we put stuff from hashtable into an array
+                for (int i = 0; i < vehicles.length; i++) {
+                    int k = (int)keys.nextElement();
+                    vehicles[i] = VehicleCollection.vehicleCollection.get(k);
+                }
+                //Sort the array
+                Arrays.sort(vehicles, new Comparator<Vehicle>() {
+                    @Override
+                    public int compare(Vehicle v1, Vehicle v2) {
+                        return v1.getFuelType().compareTo(v2.getFuelType());
+                    }
+                });
+                //Print it!
+                for (int i = 0; i < vehicles.length; i++) {
+                    System.out.printf("[%s #%d] %s%n", vehicles[i].getVehicleType(), vehicles[i].getId(), vehicles[i].getFuelType());
+                }
+            }
+
+            @Override
+            public String getHelp() {
+                return String.format("Prints fuel types of every vehicle in ascending order.%n%nUsage: print_field_ascending_fuel_type");
+            }
+        });
         commandList.put("print_field_descending_engine_power", new Command());
         commandList.put("print_field_descending_number_of_wheels", new Command());
     }
