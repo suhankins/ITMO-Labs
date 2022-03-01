@@ -20,7 +20,7 @@ public class Vehicle implements Comparable<Vehicle> {
      * <p> * Cannot be null </p>
      * <p> * Must be more than 0 </p>
      */
-    private int id;
+    private Integer id;
     /**
      * <p> Vehicle's name </p>
      * <p> * Cannot be null </p>
