@@ -3,7 +3,7 @@ package assemblyline;
 import java.util.Hashtable;
 import java.util.Enumeration;
 
-import assemblyline.Vehicles.Vehicle;
+import assemblyline.vehicles.Vehicle;
 
 /**
  * Here all vehicle are stored.

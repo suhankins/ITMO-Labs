@@ -1,4 +1,4 @@
-package assemblyline.Vehicles;
+package assemblyline.vehicles;
 
 import java.util.Hashtable;
 import java.util.Enumeration;
@@ -7,6 +7,7 @@ import assemblyline.utils.ValueOutOfRangeException;
 import assemblyline.utils.NotEmptyException;
 import assemblyline.utils.NotNullException;
 import assemblyline.utils.ErrorMessages;
+import assemblyline.utils.IO;
 
 public class Vehicle implements Comparable<Vehicle> {
     /**
@@ -148,213 +149,12 @@ public class Vehicle implements Comparable<Vehicle> {
     // =============== Set variables END ===============
 
     /**
-     * Asks user to input all the required arguments for creating a new instance of a vehicle class.
-     * @param isRequired is it required that all parameters are inputed?
-     * @param skip should name, vehicle type and fuel type be skipped?
-     * @return a hashlist where key is a name of the variable and value is a corresponding object
-     */
-    public static Hashtable<String, Object> inputArguments(boolean isRequired, boolean skip) {
-        Hashtable<String, Object> toReturn = new Hashtable<String, Object>();
-        boolean correct = skip;
-        String raw;
-
-        //This code sucks but I don't care enough to make it look good.
-        //I know that nextInt, nextLong and nextDouble exist, but using them 
-        //leads to a bunch of problems with nextLine.
-
-        //21.02.2022 UPDATE: Wow, now it's even worse.
-
-        // =============== Argument input section ===============
-        while (!correct) {
-            System.out.print("Name> ");
-            raw = assemblyline.Main.keyboard.nextLine();
-            //if you inputed anything, we might as well check if it's correct
-            if (shouldCheck(isRequired, raw)) {
-                correct = Vehicle.isNameCorrect(raw);
-                if (correct) {
-                    toReturn.put("name", raw);
-                } else {
-                    System.out.print(ErrorMessages.NAME_EMPTY);
-                }
-            } else {
-                correct = true;
-            }
-        }
-
-        // =============== Coordinates input section ===============
-        correct = false;
-        double x = 99999;
-        while (!correct) {
-            System.out.print("X position (Double)> ");
-            raw = assemblyline.Main.keyboard.nextLine();
-            if (shouldCheck(isRequired, raw)) {
-                try {
-                    x = Double.parseDouble(raw);
-                    correct = Coordinates.isXCorrect(x);
-                    if (!correct) {
-                        System.out.print(ErrorMessages.X_OUT_OF_RANGE);
-                    } else {
-                        toReturn.put("x", x);
-                    }
-                } catch(Exception e) {
-                    System.out.printf(ErrorMessages.TEMPLATE, e.getMessage());
-                }
-            } else {
-                correct = true;
-                x = 99999;
-            }
-        }
-        
-        correct = false;
-        long y = 0;
-        while (!correct) {
-            System.out.print("Y position (Long)> ");
-            raw = assemblyline.Main.keyboard.nextLine();
-            if (shouldCheck(isRequired, raw)) {
-                try {
-                    y = Long.parseLong(raw);
-                    correct = Coordinates.isYCorrect(y);
-                    if (!correct) {
-                        System.out.print(ErrorMessages.Y_OUT_OF_RANGE);
-                    } else {
-                        toReturn.put("y", y);
-                    }
-                } catch(Exception e) {
-                    System.out.printf(ErrorMessages.TEMPLATE, e.getMessage());
-                }
-            } else {
-                correct = true;
-            }
-        }
-        // =============== Coordinates input section END ===============
-
-        correct = false;
-        while (!correct) {
-            System.out.print("Engine power (Integer)> ");
-            raw = assemblyline.Main.keyboard.nextLine();
-            if (shouldCheck(isRequired, raw)) {
-                try {
-                    int enginePower = Integer.parseInt(raw);
-                    correct = isEnginePowerCorrect(enginePower);
-
-                    if (correct) {
-                        toReturn.put("enginePower", enginePower);
-                    } else {
-                        System.out.print(ErrorMessages.ENGINE_POWER_OUT_OF_RANGE);
-                    }
-                } catch (Exception e) {
-                    System.out.printf(ErrorMessages.TEMPLATE, e.getMessage());
-                }
-            } else {
-                correct = true;
-            }
-        }
-
-        correct = false;
-        while (!correct) {
-            System.out.print("Number of wheels (Integer)> ");
-            raw = assemblyline.Main.keyboard.nextLine();
-            if (shouldCheck(isRequired, raw)) {
-                try {
-                    int numberOfWheels = Integer.parseInt(raw);
-                    correct = isNumberOfWheelsCorrect(numberOfWheels);
-                    if (correct) {
-                        toReturn.put("numberOfWheels", numberOfWheels);
-                    } else {
-                        System.out.print(ErrorMessages.NUMBER_OF_WHEELS_OUT_OF_RANGE);
-                    }
-                } catch(Exception e) {
-                    System.out.printf(ErrorMessages.TEMPLATE, e.getMessage());
-                }
-            } else {
-                correct = true;
-            }
-        }  
-
-        // =============== Vehicle type input ===============
-        if (!skip) {
-            System.out.printf("%nVehicle types:%n");
-            for (int i = 0; i < VehicleType.values().length; i++) {
-                System.out.println(VehicleType.values()[i]);
-            }
-        }
-
-        correct = skip;
-        while (!correct) {
-            System.out.print("Vehicle type> ");
-            raw = assemblyline.Main.keyboard.nextLine();
-            if (shouldCheck(isRequired, raw)) {
-                try {
-                    VehicleType vehicleType = VehicleType.valueOf(raw.toUpperCase().trim());
-                    correct = isVehicleTypeCorrect(vehicleType);
-                    if (correct) {
-                        toReturn.put("vehicleType", vehicleType);
-                    } else {
-                        System.out.print(ErrorMessages.CANNOT_BE_NULL);
-                    }
-                } catch(Exception e) {
-                    System.out.printf(ErrorMessages.TEMPLATE, e.getMessage());
-                }
-            } else {
-                correct = true;
-            }
-        }
-
-        // =============== Fuel type input ===============
-        if (!skip) {
-            System.out.printf("%nFuel types:%n");
-            for (int i = 0; i < FuelType.values().length; i++) {
-                System.out.println(FuelType.values()[i]);
-            }
-        }
-
-        correct = skip;
-        while (!correct) {
-            System.out.print("Fuel Type> ");
-            raw = assemblyline.Main.keyboard.nextLine();
-            if (shouldCheck(isRequired, raw)) {
-                try {
-                    FuelType fuelType = FuelType.valueOf(raw.toUpperCase().trim());
-                    correct = isFuelTypeCorrect(fuelType);
-                    if (correct) {
-                        toReturn.put("fuelType", fuelType);
-                    } else {
-                        System.out.print(ErrorMessages.CANNOT_BE_NULL);
-                    }
-                } catch(Exception e) {
-                    System.out.printf(ErrorMessages.TEMPLATE, e.getMessage());
-                }
-            } else {
-                correct = true;
-            }
-        }
-        // =============== Argument input section END ===============
-
-        return toReturn;
-    }
-
-    public static boolean shouldCheck(boolean isRequired, String string) {
-        return isRequired || !string.isBlank();
-    }
-
-    /**
-     * Asks user to input all the required arguments for creating a new instance of a vehicle class.
-     * @param isRequired is it required that all parameters are inputed?
-     * @return a hashlist where key is a name of the variable and value is a corresponding object
-     */
-    public static Hashtable<String, Object> inputArguments(boolean isRequired) {
-        return inputArguments(isRequired, false);
-    }
-
-    /**
      * Asks for user input to update given vehicle's fields.
      * @param vehicle
      * @param ifLower only update fields if given value is lower
      */
-    public static void updateVehicle(Vehicle vehicle, boolean ifLower) {
-        Hashtable<String, Object> listOfParams = Vehicle.inputArguments(false, ifLower);
+    public void updateData(Hashtable<String, Object> listOfParams, boolean ifLower) {
         Enumeration keys = listOfParams.keys();
-        Coordinates coordinates = vehicle.getCoordinates();
 
         //I really should consider finding a better way to do this...
         while (keys.hasMoreElements()) {
@@ -362,36 +162,36 @@ public class Vehicle implements Comparable<Vehicle> {
             Object v = listOfParams.get(k);
             switch(k) {
                 case "name":
-                    vehicle.setName((String)v);
-                    System.out.println("Name updated");
+                    this.setName((String)v);
+                    IO.print("Name updated%n");
                     break;
                 case "enginePower":
                     int enginePower = (int)v;
                     if (ifLower) {
-                        if (vehicle.getEnginePower() <= enginePower) {
+                        if (this.getEnginePower() <= enginePower) {
                             break;
                         }
                     }
-                    vehicle.setEnginePower(enginePower);
-                    System.out.println("Engine power updated");
+                    this.setEnginePower(enginePower);
+                    IO.print("Engine power updated%n");
                     break;
                 case "numberOfWheels":
                     int numberOfWheels = (int)v;
                     if (ifLower) {
-                        if (vehicle.getNumberOfWheels() <= numberOfWheels) {
+                        if (this.getNumberOfWheels() <= numberOfWheels) {
                             break;
                         }
                     }
-                    vehicle.setNumberOfWheels(numberOfWheels);
-                    System.out.println("Number of wheels updated");
+                    this.setNumberOfWheels(numberOfWheels);
+                    IO.print("Number of wheels updated%n");
                     break;
                 case "vehicleType":
-                    vehicle.setVehicleType((VehicleType)v);
-                    System.out.println("Vehicle type updated");
+                    this.setVehicleType((VehicleType)v);
+                    IO.print("Vehicle type updated%n");
                     break;
                 case "fuelType":
-                    vehicle.setFuelType((FuelType)v);
-                    System.out.println("Fuel type updated");
+                    this.setFuelType((FuelType)v);
+                    IO.print("Fuel type updated%n");
                     break;
                 case "x":
                     double x = (double)v;
@@ -401,7 +201,7 @@ public class Vehicle implements Comparable<Vehicle> {
                         }
                     }
                     coordinates.setX(x);
-                    System.out.println("X updated");
+                    IO.print("X updated%n");
                     break;
                 case "y":
                     long y = (long)v;
@@ -411,7 +211,7 @@ public class Vehicle implements Comparable<Vehicle> {
                         }
                     }
                     coordinates.setY(y);
-                    System.out.println("Y updated");
+                    IO.print("Y updated%n");
                     break;
             }
         }

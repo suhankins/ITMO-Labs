@@ -1,4 +1,4 @@
-package assemblyline.Vehicles;
+package assemblyline.vehicles;
 
 public enum VehicleType {
     BOAT,

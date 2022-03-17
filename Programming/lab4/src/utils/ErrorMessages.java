@@ -1,6 +1,6 @@
 package assemblyline.utils;
 
-import assemblyline.Vehicles.Coordinates;
+import assemblyline.vehicles.Coordinates;
 
 /**
  * A ton of predefined error messages
