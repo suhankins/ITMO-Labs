@@ -5,8 +5,12 @@ import java.util.Hashtable;
 
 import assemblyline.vehicles.Vehicle;
 
-import assemblyline.utils.IO;
+import assemblyline.commands.Command;
+
+import assemblyline.utils.FileManager;
 import assemblyline.utils.ErrorMessages;
+import assemblyline.utils.FeatureNotImplementedException;
+import assemblyline.utils.IO;
 
 /**
 * Lab4 Programming. Based on the description
@@ -21,7 +25,7 @@ public class Main {
         String[] userInput;
         //=============== Save file loading routine ===============
         try {
-            FileManager.loadSave(args.length > 0 ? args[0] : "");
+            FileManager.loadFile(args.length > 0 ? args[0] : "default.txt");
         } catch (FeatureNotImplementedException exception) {
             System.out.println("File loading routine is still not implemented! Implement it already, you idiot!");
         } catch (Exception exception) {

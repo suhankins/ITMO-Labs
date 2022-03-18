@@ -22,4 +22,8 @@ public class ErrorMessages {
         String.format(TEMPLATE, new NotNullException().getMessage());
     public static final String COLLECTION_IS_EMPTY = 
         String.format(TEMPLATE, "Vehicle collection is empty.");
+    public static final String FILE_DOES_NOT_EXIST =
+        String.format(TEMPLATE, "Requested file does not exist.");
+    public static final String UNKNOWN_ERROR =
+        String.format(TEMPLATE, "Unknown error.");
 }

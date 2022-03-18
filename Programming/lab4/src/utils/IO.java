@@ -1,16 +1,15 @@
 package assemblyline.utils;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  * Class used for inputting text (and outputting too!)
  */
 public class IO {
-    private static IOState state = IOState.KEYBOARD;
-
     private static Scanner keyboard = new Scanner(System.in);
 
-    private static String[] script;
+    private static ArrayList<String> script = new ArrayList<String>();
 
     /**
      * Outputs text to where ever we need
@@ -30,11 +29,21 @@ public class IO {
     }
 
     public static String nextLine() {
-        return keyboard.nextLine();
+        if (script.isEmpty()) {
+            return keyboard.nextLine();
+        } else {
+            return script.remove(0);
+        }
     }
 
-    public static void executeScript(String string) {
-        //TODO: Implement
-        throw new FeatureNotImplementedException();
+    /**
+     * Adds script to the beginning of the currect script stack
+     * @param string script
+     */
+    public static void addScript(String string) {
+        String[] toAdd = string.split("\n");
+        for (int i = toAdd.length - 1; i >= 0; i--){
+            script.add(0, toAdd[i]);
+        }
     }
 }
