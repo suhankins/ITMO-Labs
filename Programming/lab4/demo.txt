@@ -1,0 +1,89 @@
+insert 8283
+runner unreal
+21
+215
+30
+13
+BOAT
+ANTIMATTER
+insert 1889
+unreal road
+211
+7
+3
+19
+BOAT
+ELECTRICITY
+insert 5262
+unreal beep
+45
+49
+71
+6
+PLANE
+ELECTRICITY
+insert 6159
+fast fast
+231
+120
+71
+4
+PLANE
+MANPOWER
+insert 8606
+panic car
+33
+170
+60
+12
+PLANE
+ELECTRICITY
+insert 8222
+runner boat
+81
+100
+30
+1
+BOAT
+ANTIMATTER
+insert 4902
+speed fast
+220
+74
+26
+19
+BOAT
+ELECTRICITY
+insert 2283
+edition big
+241
+111
+1
+6
+PLANE
+ELECTRICITY
+insert 2443
+small special
+112
+183
+44
+16
+PLANE
+ELECTRICITY
+insert 3235
+small edition
+184
+209
+57
+7
+PLANE
+ELECTRICITY
+insert 6481
+panic sport
+216
+2
+3
+5
+PLANE
+MANPOWER
+execute_script default.txt
