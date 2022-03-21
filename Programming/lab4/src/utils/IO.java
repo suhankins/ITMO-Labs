@@ -2,6 +2,7 @@ package assemblyline.utils;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
 
 /**
  * Class used for inputting text (and outputting too!)
@@ -32,7 +33,9 @@ public class IO {
         if (script.isEmpty()) {
             return keyboard.nextLine();
         } else {
-            return script.remove(0);
+            String line = script.remove(0);
+            IO.print("%s%n", line);
+            return line;
         }
     }
 
@@ -40,10 +43,7 @@ public class IO {
      * Adds script to the beginning of the currect script stack
      * @param string script
      */
-    public static void addScript(String string) {
-        String[] toAdd = string.split("\n");
-        for (int i = toAdd.length - 1; i >= 0; i--){
-            script.add(0, toAdd[i]);
-        }
+    public static void addScript(List<String> string) {
+        script.addAll(0, string);
     }
 }

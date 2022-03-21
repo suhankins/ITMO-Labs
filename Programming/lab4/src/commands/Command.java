@@ -37,9 +37,8 @@ public class Command {
         commandList.put("remove_key", new RemoveKeyCommand());
         commandList.put("clear", new ClearCommand());
 
-        //TODO: these two
-        commandList.put("save", new Command());
-        commandList.put("execute_script", new Command());
+        commandList.put("save", new SaveCommand());
+        commandList.put("execute_script", new ExecuteScriptCommand());
 
         commandList.put("exit", new ExitCommand());
         commandList.put("history", new HistoryCommand());

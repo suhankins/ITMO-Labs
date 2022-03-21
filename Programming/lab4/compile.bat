@@ -1,1 +1,1 @@
-javac -classpath .;json-20211205.jar -d . src/*.java src/vehicles/*.java src/utils/*.java src/commands/*.java -Xdiags:verbose
+javac -classpath "json-20211205.jar;." -d . src/*.java src/vehicles/*.java src/utils/*.java src/commands/*.java

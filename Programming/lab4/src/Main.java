@@ -25,7 +25,8 @@ public class Main {
         String[] userInput;
         //=============== Save file loading routine ===============
         try {
-            FileManager.loadFile(args.length > 0 ? args[0] : "default.txt");
+            //IO.print(args[0]);
+            //FileManager.loadSave(args.length > 0 ? args[0] : "default.txt");
         } catch (FeatureNotImplementedException exception) {
             System.out.println("File loading routine is still not implemented! Implement it already, you idiot!");
         } catch (Exception exception) {

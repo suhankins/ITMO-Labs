@@ -26,4 +26,6 @@ public class ErrorMessages {
         String.format(TEMPLATE, "Requested file does not exist.");
     public static final String UNKNOWN_ERROR =
         String.format(TEMPLATE, "Unknown error.");
+    public static final String FILE_NOT_READABLE =
+        String.format(TEMPLATE, "File cannot be read.");
 }
