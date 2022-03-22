@@ -1,20 +1,10 @@
 package assemblyline.commands;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.Hashtable;
 
-import assemblyline.VehicleCollection;
-
-import assemblyline.vehicles.*;
-
-import assemblyline.utils.ErrorMessages;
-import assemblyline.utils.NoArgumentGivenException;
 import assemblyline.utils.CommandDoesNotExistException;
 import assemblyline.utils.FeatureNotImplementedException;
-import assemblyline.utils.IO;
-import assemblyline.utils.InputArguments;
+import assemblyline.utils.NoArgumentGivenException;
 
 /**
  * Class for commands

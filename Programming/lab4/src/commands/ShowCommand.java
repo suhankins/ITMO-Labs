@@ -3,7 +3,6 @@ package assemblyline.commands;
 import java.util.Enumeration;
 
 import assemblyline.VehicleCollection;
-
 import assemblyline.utils.IO;
 
 public class ShowCommand extends Command {

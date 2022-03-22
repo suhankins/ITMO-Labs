@@ -1,8 +1,8 @@
 package assemblyline.utils;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Class used for inputting text (and outputting too!)

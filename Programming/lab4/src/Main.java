@@ -1,15 +1,11 @@
 package assemblyline;
 
 import java.util.Arrays;
-import java.util.Hashtable;
-
-import assemblyline.vehicles.Vehicle;
 
 import assemblyline.commands.Command;
-
-import assemblyline.utils.FileManager;
 import assemblyline.utils.ErrorMessages;
 import assemblyline.utils.FeatureNotImplementedException;
+import assemblyline.utils.FileManager;
 import assemblyline.utils.IO;
 
 /**
@@ -25,12 +21,13 @@ public class Main {
         String[] userInput;
         //=============== Save file loading routine ===============
         try {
-            //IO.print(args[0]);
-            //FileManager.loadSave(args.length > 0 ? args[0] : "default.txt");
+            if (args.length > 0) { 
+                FileManager.loadSave(args[0]);
+            }
         } catch (FeatureNotImplementedException exception) {
-            System.out.println("File loading routine is still not implemented! Implement it already, you idiot!");
+            IO.print("File loading routine is still not implemented! Implement it already, you idiot!%n");
         } catch (Exception exception) {
-            System.out.println(exception.getMessage());
+            IO.print(ErrorMessages.TEMPLATE, exception.getMessage());
         }
 
         //=============== Initial message ===============

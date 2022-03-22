@@ -1,44 +1,45 @@
 package assemblyline.utils;
 
-import java.util.Enumeration;
-
+import java.math.BigDecimal;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.Enumeration;
+import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import assemblyline.VehicleCollection;
 import assemblyline.vehicles.Vehicle;
+import assemblyline.vehicles.Coordinates;
+import assemblyline.vehicles.FuelType;
+import assemblyline.vehicles.VehicleType;
 
 /**
  * Class used for all things file managment 
  */
 public class FileManager {
     /**
-     * Used when no parameter is given
+     * Loads and executes commands from a speicified file
+     * @param filename name of the file from which command list should be loaded
      */
-    final static String DEFAULT_FILENAME = "default.json";
-    /**
-     * Loads list of created vehicles from requested file
-     * @param filename name of the file from which vehicle list should be loaded
-     */
-    public static String loadScript(String filename) {
+    public static void loadScript(String filename) {
         Path path = Paths.get(filename);
         if (Files.exists(path)) {
             if (Files.isReadable(path)) {
                 try {
                     IO.addScript(Files.readAllLines(path));
                 } catch(Exception e) {
-                    return e.getMessage();
+                    IO.print(ErrorMessages.TEMPLATE, e.getMessage());
                 }
             } else {
-                return ErrorMessages.FILE_NOT_READABLE;
+                IO.print(ErrorMessages.FILE_NOT_READABLE);
             }
         } else {
-            return ErrorMessages.FILE_DOES_NOT_EXIST;
+            IO.print(ErrorMessages.FILE_DOES_NOT_EXIST);
         }
-        return ErrorMessages.UNKNOWN_ERROR;
     }
     /**
      * Saves list of created vehicles to requested file
@@ -63,13 +64,15 @@ public class FileManager {
             int k = (int)keys.nextElement();
             Vehicle vehicle = VehicleCollection.vehicleCollection.get(k);
             vehicleJSON.put("key", k);
+            vehicleJSON.put("name", vehicle.getName());
             vehicleJSON.put("id", vehicle.getId());
             vehicleJSON.put("x", vehicle.getCoordinates().getX());
             vehicleJSON.put("y", vehicle.getCoordinates().getY());
             vehicleJSON.put("enginePower", vehicle.getEnginePower());
             vehicleJSON.put("numberOfWheels", vehicle.getNumberOfWheels());
-            vehicleJSON.put("type", vehicle.getVehicleType().toString());
-            vehicleJSON.put("fuel", vehicle.getFuelType().toString());
+            vehicleJSON.put("vehicleType", vehicle.getVehicleType().toString());
+            vehicleJSON.put("fuelType", vehicle.getFuelType().toString());
+            vehicleJSON.put("creationDate", vehicle.getCreationDate().toString());
 
             vehicles[i] = vehicleJSON;
         }
@@ -83,5 +86,75 @@ public class FileManager {
         }
 
         IO.print("File successfuly saved%n");
+    }
+    /**
+     * Loads vehicle collection from a specified file
+     * @param filename name of the file
+     */
+    public static void loadSave(String filename) {
+        //Since this is probably the last thing i'm going to add to this project
+        //before next lab, here's the song i listened to while writing this code
+        // https://www.youtube.com/watch?v=rB7XFQgJHBI
+        Path path = Paths.get(filename);
+        if (Files.exists(path)) {
+            if (Files.isReadable(path)) {
+                try {
+                    //Creating JSONObject
+                    List<String> strings = Files.readAllLines(path);
+                    String rawJSON = "";
+                    for (int i = 0; i < strings.size(); i++) {
+                        rawJSON = String.format("%s%n%s", rawJSON, strings.get(i));
+                    }
+                    JSONObject vehiclesJSON = new JSONObject(rawJSON);
+
+                    //Init date
+                    VehicleCollection.initializationDate = LocalDate.parse((String)vehiclesJSON.get("initializationDate"));
+                    //Vehicles
+                    JSONArray vehicles = (JSONArray)vehiclesJSON.get("vehicles");
+
+                    for (int i = 0; i < vehicles.length(); i++) {
+                        JSONObject vehicleJSON = (JSONObject)vehicles.get(i);
+
+                        Double x;
+                        try {
+                            x = ((BigDecimal)vehicleJSON.get("x")).doubleValue();
+                        } catch (Exception e) {
+                            x = (double)(int)vehicleJSON.get("x");
+                        }
+
+                        Long y;
+                        try {
+                            y = (long)vehicleJSON.get("y");
+                        } catch (Exception e) {
+                            y = (long)(int)vehicleJSON.get("y");
+                        }
+
+                        Vehicle vehicle = new Vehicle(
+                            (String)vehicleJSON.get("name"),
+                            //I'm not sure...
+                            new Coordinates(x, y),
+                            (int)vehicleJSON.get("enginePower"),
+                            (int)vehicleJSON.get("numberOfWheels"),
+                            VehicleType.valueOf((String)vehicleJSON.get("vehicleType")),
+                            FuelType.valueOf((String)vehicleJSON.get("fuelType"))
+                        );
+                        vehicle.setId((Integer)vehicleJSON.get("id"));
+                        vehicle.setCreationDate(LocalDate.parse((String)vehicleJSON.get("creationDate")));
+                        VehicleCollection.vehicleCollection.put(
+                            (int)vehicleJSON.get("key"),
+                            vehicle
+                        );
+                    }
+
+                    IO.print("Collection was successfuly loaded!%n");
+                } catch(Exception e) {
+                    IO.print(ErrorMessages.TEMPLATE, e.getMessage());
+                }
+            } else {
+                IO.print(ErrorMessages.FILE_NOT_READABLE);
+            }
+        } else {
+            IO.print(ErrorMessages.FILE_DOES_NOT_EXIST);
+        }
     }
 }

@@ -79,6 +79,12 @@ public class Vehicle implements Comparable<Vehicle> {
     public FuelType getFuelType() {
         return fuelType;
     }
+    public String getName() {
+        return this.name;
+    }
+    public java.time.LocalDate getCreationDate() {
+        return this.creationDate;
+    }
     // =============== Access to variables methods END ===============
 
     // =============== Check variable correctness ===============
@@ -145,6 +151,21 @@ public class Vehicle implements Comparable<Vehicle> {
             throw new NotNullException("Fuel type");
         }
         this.fuelType = fuelType;
+    }
+    /**
+     * This is only used for loading vehicles from JSON
+     */
+    public void setId(Integer id) {
+        this.id = id;
+        if (counter < id) {
+            counter = id;
+        }
+    }
+    /**
+     * This is only used for loading vehicles from JSON
+     */
+    public void setCreationDate(java.time.LocalDate date) {
+        this.creationDate = date;
     }
     // =============== Set variables END ===============
 
