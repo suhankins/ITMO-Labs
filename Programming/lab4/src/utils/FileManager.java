@@ -1,21 +1,23 @@
 package assemblyline.utils;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
+import java.util.Scanner;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import assemblyline.VehicleCollection;
-import assemblyline.vehicles.Vehicle;
 import assemblyline.vehicles.Coordinates;
 import assemblyline.vehicles.FuelType;
 import assemblyline.vehicles.VehicleType;
+import assemblyline.vehicles.Vehicle;
 
 /**
  * Class used for all things file managment 
@@ -26,20 +28,23 @@ public class FileManager {
      * @param filename name of the file from which command list should be loaded
      */
     public static void loadScript(String filename) {
-        Path path = Paths.get(filename);
-        if (Files.exists(path)) {
-            if (Files.isReadable(path)) {
-                try {
-                    IO.addScript(Files.readAllLines(path));
-                } catch(Exception e) {
-                    IO.print(ErrorMessages.TEMPLATE, e.getMessage());
-                }
-            } else {
-                IO.print(ErrorMessages.FILE_NOT_READABLE);
-            }
-        } else {
+        File file = new File(filename);
+        Scanner fileReader;
+        try {
+            fileReader = new Scanner(file);
+        } catch(FileNotFoundException exception) {
             IO.print(ErrorMessages.FILE_DOES_NOT_EXIST);
+            return;
+        } catch(Exception e) {
+            IO.print(ErrorMessages.TEMPLATE, e.getMessage());
+            return;
         }
+        ArrayList<String> lines = new ArrayList<String>();
+        while (fileReader.hasNextLine()) {
+            lines.add(fileReader.nextLine());
+        }
+        IO.addScript(lines);
+        fileReader.close();
     }
     /**
      * Saves list of created vehicles to requested file
@@ -50,9 +55,6 @@ public class FileManager {
             IO.print("%s%n", ErrorMessages.COLLECTION_IS_EMPTY);
             return;
         }
-
-        Path path = Paths.get(filename);
-
         JSONObject save = new JSONObject().put("initializationDate", VehicleCollection.initializationDate.toString());
 
         JSONObject[] vehicles = new JSONObject[VehicleCollection.vehicleCollection.size()];
@@ -80,9 +82,13 @@ public class FileManager {
         save.put("vehicles", vehicles);
 
         try {
-            Files.write(path, save.toString().getBytes());
+            FileWriter file = new FileWriter(filename);
+            BufferedWriter writer = new BufferedWriter(file);
+            writer.write(save.toString());
+            writer.close();
         } catch(Exception e) {
             IO.print(ErrorMessages.TEMPLATE, e.getMessage());
+            return;
         }
 
         IO.print("File successfuly saved%n");
@@ -94,67 +100,64 @@ public class FileManager {
     public static void loadSave(String filename) {
         //Since this is probably the last thing i'm going to add to this project
         //before next lab, here's the song i listened to while writing this code
-        // https://www.youtube.com/watch?v=rB7XFQgJHBI
-        Path path = Paths.get(filename);
-        if (Files.exists(path)) {
-            if (Files.isReadable(path)) {
-                try {
-                    //Creating JSONObject
-                    List<String> strings = Files.readAllLines(path);
-                    String rawJSON = "";
-                    for (int i = 0; i < strings.size(); i++) {
-                        rawJSON = String.format("%s%n%s", rawJSON, strings.get(i));
-                    }
-                    JSONObject vehiclesJSON = new JSONObject(rawJSON);
-
-                    //Init date
-                    VehicleCollection.initializationDate = LocalDate.parse((String)vehiclesJSON.get("initializationDate"));
-                    //Vehicles
-                    JSONArray vehicles = (JSONArray)vehiclesJSON.get("vehicles");
-
-                    for (int i = 0; i < vehicles.length(); i++) {
-                        JSONObject vehicleJSON = (JSONObject)vehicles.get(i);
-
-                        Double x;
-                        try {
-                            x = ((BigDecimal)vehicleJSON.get("x")).doubleValue();
-                        } catch (Exception e) {
-                            x = (double)(int)vehicleJSON.get("x");
-                        }
-
-                        Long y;
-                        try {
-                            y = (long)vehicleJSON.get("y");
-                        } catch (Exception e) {
-                            y = (long)(int)vehicleJSON.get("y");
-                        }
-
-                        Vehicle vehicle = new Vehicle(
-                            (String)vehicleJSON.get("name"),
-                            //I'm not sure...
-                            new Coordinates(x, y),
-                            (int)vehicleJSON.get("enginePower"),
-                            (int)vehicleJSON.get("numberOfWheels"),
-                            VehicleType.valueOf((String)vehicleJSON.get("vehicleType")),
-                            FuelType.valueOf((String)vehicleJSON.get("fuelType"))
-                        );
-                        vehicle.setId((Integer)vehicleJSON.get("id"));
-                        vehicle.setCreationDate(LocalDate.parse((String)vehicleJSON.get("creationDate")));
-                        VehicleCollection.vehicleCollection.put(
-                            (int)vehicleJSON.get("key"),
-                            vehicle
-                        );
-                    }
-
-                    IO.print("Collection was successfuly loaded!%n");
-                } catch(Exception e) {
-                    IO.print(ErrorMessages.TEMPLATE, e.getMessage());
-                }
-            } else {
-                IO.print(ErrorMessages.FILE_NOT_READABLE);
-            }
-        } else {
+        // https://www.youtube.com/watch?v=oqLOBhaizy8
+        File file = new File(filename);
+        Scanner fileReader;
+        try {
+            fileReader = new Scanner(file);
+        } catch(FileNotFoundException exception) {
             IO.print(ErrorMessages.FILE_DOES_NOT_EXIST);
+            return;
+        } catch(Exception e) {
+            IO.print(ErrorMessages.TEMPLATE, e.getMessage());
+            return;
         }
+        String rawJSON = "";
+        while (fileReader.hasNextLine()) {
+            rawJSON = String.format("%s%n%s", rawJSON, fileReader.nextLine());
+        }
+        fileReader.close();
+        JSONObject vehiclesJSON = new JSONObject(rawJSON);
+
+        //Init date
+        VehicleCollection.initializationDate = LocalDate.parse((String)vehiclesJSON.get("initializationDate"));
+        //Vehicles
+        JSONArray vehicles = (JSONArray)vehiclesJSON.get("vehicles");
+
+        for (int i = 0; i < vehicles.length(); i++) {
+            JSONObject vehicleJSON = (JSONObject)vehicles.get(i);
+
+            Double x;
+            try {
+                x = ((BigDecimal)vehicleJSON.get("x")).doubleValue();
+            } catch (Exception e) {
+                x = (double)(int)vehicleJSON.get("x");
+            }
+
+            Long y;
+            try {
+                y = (long)vehicleJSON.get("y");
+            } catch (Exception e) {
+                y = (long)(int)vehicleJSON.get("y");
+            }
+
+            Vehicle vehicle = new Vehicle(
+                (String)vehicleJSON.get("name"),
+                //I'm not sure...
+                new Coordinates(x, y),
+                (int)vehicleJSON.get("enginePower"),
+                (int)vehicleJSON.get("numberOfWheels"),
+                VehicleType.valueOf((String)vehicleJSON.get("vehicleType")),
+                FuelType.valueOf((String)vehicleJSON.get("fuelType"))
+            );
+            vehicle.setId((Integer)vehicleJSON.get("id"));
+            vehicle.setCreationDate(LocalDate.parse((String)vehicleJSON.get("creationDate")));
+            VehicleCollection.vehicleCollection.put(
+                (int)vehicleJSON.get("key"),
+                vehicle
+            );
+        }
+
+        IO.print("Collection was successfuly loaded!%n");
     }
 }
