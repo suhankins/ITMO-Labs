@@ -10,9 +10,9 @@ for i in range(random.randrange(25,75)):
     f.write("\n")
     f.write(random.choice(words) + " " + random.choice(words)) #NAME
     f.write("\n")
-    f.write(str(random.randrange(1,250))) #X
+    f.write(str(random.randrange(-250,250) + random.random())) #X
     f.write("\n")
-    f.write(str(random.randrange(1,250))) #Y
+    f.write(str(random.randrange(-250,250))) #Y
     f.write("\n")
     f.write(str(random.randrange(1,100))) #POWER
     f.write("\n")
