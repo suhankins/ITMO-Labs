@@ -89,7 +89,7 @@ public class Vehicle implements Comparable<Vehicle> {
     // =============== Check variable correctness ===============
     public static boolean isNameCorrect(String name) {
         if (name == null) return false;
-        return !name.isBlank();
+        return !name.trim().equals("");
     }
     public static boolean isCoordinatesCorrect(Coordinates coordinates) {
         return coordinates != null;

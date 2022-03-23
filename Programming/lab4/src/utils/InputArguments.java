@@ -203,6 +203,6 @@ public class InputArguments {
      * @return whether you should or should check value correctness
      */
     public static boolean shouldCheck(boolean isRequired, String string) {
-        return isRequired || !string.isBlank();
+        return isRequired || !string.trim().equals("");
     }
 }
