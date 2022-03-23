@@ -17,7 +17,7 @@ import assemblyline.utils.IO;
 */
 public class Main {
     public static void main(String[] args) {
-        //=============== Initilization ===============
+        //=============== Initialization ===============
         String[] userInput;
         //=============== Save file loading routine ===============
         try {
@@ -33,7 +33,7 @@ public class Main {
         //=============== Initial message ===============
         IO.print("Lab4 'assemblyline'%nUse 'help' command to see list of commands.%n%n");
 
-        //=============== Handling user imput ===============
+        //=============== Handling user input ===============
         while (true) {
             System.out.print("> ");
             userInput = IO.nextLine().split(" ");
@@ -48,7 +48,7 @@ public class Main {
                     Command.executeCommand(userInput[0]);
                 }
             } catch(java.util.InputMismatchException e) {
-                IO.print("ERROR: Wrong type of data was inputed%n");
+                IO.print("ERROR: Wrong type of data was inputted%n");
             } catch(Exception e) {
                 //Apparently that can happen /shrug
                 if (e.getMessage() == null) {
