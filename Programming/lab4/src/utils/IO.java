@@ -40,7 +40,7 @@ public class IO {
     }
 
     /**
-     * Adds script to the beginning of the currect script stack
+     * Adds script to the beginning of the current script stack
      * @param string script
      */
     public static void addScript(List<String> string) {

@@ -38,7 +38,7 @@ public class Main {
             System.out.print("> ");
             userInput = IO.nextLine().split(" ");
 
-            //All commands are lower case and i don't want people to suffer from not knowing it
+            //All commands are lower case, and I don't want people to suffer from not knowing it
             userInput[0] = userInput[0].toLowerCase();
 
             try {

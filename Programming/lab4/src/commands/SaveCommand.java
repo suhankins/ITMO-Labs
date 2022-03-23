@@ -1,8 +1,6 @@
 package assemblyline.commands;
 
-import assemblyline.VehicleCollection;
 import assemblyline.utils.FileManager;
-import assemblyline.utils.IO;
 
 public class SaveCommand extends Command {
     @Override

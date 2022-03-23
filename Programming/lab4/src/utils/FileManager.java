@@ -20,11 +20,11 @@ import assemblyline.vehicles.VehicleType;
 import assemblyline.vehicles.Vehicle;
 
 /**
- * Class used for all things file managment 
+ * Class used for all things file management
  */
 public class FileManager {
     /**
-     * Loads and executes commands from a speicified file
+     * Loads and executes commands from a specified file
      * @param filename name of the file from which command list should be loaded
      */
     public static void loadScript(String filename) {
@@ -91,15 +91,15 @@ public class FileManager {
             return;
         }
 
-        IO.print("File successfuly saved%n");
+        IO.print("File successfully saved%n");
     }
     /**
      * Loads vehicle collection from a specified file
      * @param filename name of the file
      */
     public static void loadSave(String filename) {
-        //Since this is probably the last thing i'm going to add to this project
-        //before next lab, here's the song i listened to while writing this code
+        //Since this is probably the last thing I'm going to add to this project
+        //before next lab, here's the song I listened to while writing this code
         // https://www.youtube.com/watch?v=oqLOBhaizy8
         File file = new File(filename);
         Scanner fileReader;
@@ -158,6 +158,6 @@ public class FileManager {
             );
         }
 
-        IO.print("Collection was successfuly loaded!%n");
+        IO.print("Collection was successfully loaded!%n");
     }
 }

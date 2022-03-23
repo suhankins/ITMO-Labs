@@ -3,13 +3,12 @@ package assemblyline.commands;
 import java.util.Hashtable;
 
 import assemblyline.utils.CommandDoesNotExistException;
-import assemblyline.utils.FeatureNotImplementedException;
 import assemblyline.utils.NoArgumentGivenException;
 
 /**
  * Class for commands
  */
-public class Command {
+public abstract class Command {
     /**
      * List of commands
      */
@@ -81,7 +80,7 @@ public class Command {
     /**
      * Checks if command exists
      * @param name command name
-     * @return 
+     * @return whether command exists or not
      */
     public static boolean doesCommandExist(String name) {
         return commandList.containsKey(name);
@@ -89,7 +88,7 @@ public class Command {
 
     /**
      * Checks if argument was given. Throws NoArgumentGivenException if not.
-     * @param args
+     * @param args arguments
      */
     public static void isArgumentGiven(String[] args) {
         if (args.length == 0) {
@@ -103,15 +102,11 @@ public class Command {
      * Execute the command
      * @param args arguments
      */
-    public void execute(String[] args) {
-        throw new FeatureNotImplementedException();
-    }
+    public abstract void execute(String[] args);
 
     /**
      * Get command's description
      * @return command description
      */
-    public String getHelp() {
-        return "No description.";
-    }
+    public abstract String getHelp();
 }

@@ -16,13 +16,11 @@ public class Coordinates {
 
     //=============== Check variable correctness ===============
     public static boolean isXCorrect(double x) {
-        if (x > MAX_X) return false;
-        return true;
+        return !(x > MAX_X);
     }
 
     public static boolean isYCorrect(long y) {
-        if (y > MAX_Y) return false;
-        return true;
+        return y <= MAX_Y;
     }
     //=============== Check variable correctness END ===============
     

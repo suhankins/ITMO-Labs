@@ -7,7 +7,7 @@ import assemblyline.vehicles.*;
 public class InputArguments {
         /**
      * Asks user to input all the required arguments for creating a new instance of a vehicle class.
-     * @param isRequired is it required that all parameters are inputed?
+     * @param isRequired is it required that all parameters are inputted?
      * @param skip should name, vehicle type and fuel type be skipped?
      * @return a hashlist where key is a name of the variable and value is a corresponding object
      */
@@ -16,17 +16,17 @@ public class InputArguments {
         boolean correct = skip;
         String raw;
 
-        //This code sucks but I don't care enough to make it look good.
+        //This code sucks, but I don't care enough to make it look good.
         //I know that nextInt, nextLong and nextDouble exist, but using them 
         //leads to a bunch of problems with nextLine.
 
-        //21.02.2022 UPDATE: Wow, now it's even worse.
+        //21.02.2022 UPDATE: Wow, now it's even worse now.
 
         // =============== Argument input section ===============
         while (!correct) {
             IO.print("Name> ");
             raw = IO.nextLine();
-            //if you inputed anything, we might as well check if it's correct
+            //if you inputted anything, we might as well check if it's correct
             if (shouldCheck(isRequired, raw)) {
                 correct = Vehicle.isNameCorrect(raw);
                 if (correct) {
@@ -41,7 +41,7 @@ public class InputArguments {
 
         // =============== Coordinates input section ===============
         correct = false;
-        double x = 99999;
+        double x;
         while (!correct) {
             IO.print("X position (Double)> ");
             raw = IO.nextLine();
@@ -59,12 +59,11 @@ public class InputArguments {
                 }
             } else {
                 correct = true;
-                x = 99999;
             }
         }
         
         correct = false;
-        long y = 0;
+        long y;
         while (!correct) {
             IO.print("Y position (Long)> ");
             raw = IO.nextLine();
@@ -144,12 +143,10 @@ public class InputArguments {
             if (shouldCheck(isRequired, raw)) {
                 try {
                     VehicleType vehicleType = VehicleType.valueOf(raw.toUpperCase().trim());
-                    correct = Vehicle.isVehicleTypeCorrect(vehicleType);
-                    if (correct) {
-                        toReturn.put("vehicleType", vehicleType);
-                    } else {
-                        IO.print(ErrorMessages.CANNOT_BE_NULL);
-                    }
+                    toReturn.put("vehicleType", vehicleType);
+                    //There's actually no reason to check if VehicleType is correct, because
+                    //valueOf can't return null
+                    correct = true;
                 } catch(Exception e) {
                     IO.print(ErrorMessages.TEMPLATE, e.getMessage());
                 }
@@ -173,12 +170,10 @@ public class InputArguments {
             if (shouldCheck(isRequired, raw)) {
                 try {
                     FuelType fuelType = FuelType.valueOf(raw.toUpperCase().trim());
-                    correct = Vehicle.isFuelTypeCorrect(fuelType);
-                    if (correct) {
-                        toReturn.put("fuelType", fuelType);
-                    } else {
-                        IO.print(ErrorMessages.CANNOT_BE_NULL);
-                    }
+                    toReturn.put("fuelType", fuelType);
+                    correct = true;
+                    //There's actually no reason to check if VehicleType is correct, because
+                    //valueOf can't return null
                 } catch(Exception e) {
                     IO.print(ErrorMessages.TEMPLATE, e.getMessage());
                 }
@@ -193,13 +188,20 @@ public class InputArguments {
 
     /**
      * Asks user to input all the required arguments for creating a new instance of a vehicle class.
-     * @param isRequired is it required that all parameters are inputed?
+     * @param isRequired is it required that all parameters are inputted?
      * @return a hashlist where key is a name of the variable and value is a corresponding object
      */
     public static Hashtable<String, Object> inputArguments(boolean isRequired) {
         return inputArguments(isRequired, false);
     }
 
+    /**
+     * Returns whether you should or should check value correctness.
+     * If it's not required, but something was inputted, value should still be checked.
+     * @param isRequired
+     * @param string
+     * @return whether you should or should check value correctness
+     */
     public static boolean shouldCheck(boolean isRequired, String string) {
         return isRequired || !string.isBlank();
     }

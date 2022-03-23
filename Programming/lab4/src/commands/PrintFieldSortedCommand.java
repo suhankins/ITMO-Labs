@@ -2,8 +2,6 @@ package assemblyline.commands;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Enumeration;
-import java.util.Hashtable;
 
 import assemblyline.vehicles.*;
 import assemblyline.VehicleCollection;
@@ -12,8 +10,8 @@ import assemblyline.utils.IO;
 import assemblyline.utils.ErrorMessages;
 
 public class PrintFieldSortedCommand extends Command {
-    private String fieldName;
-    private boolean ascending;
+    private final String fieldName;
+    private final boolean ascending;
 
     public PrintFieldSortedCommand(String fieldName, boolean ascending) {
         this.fieldName = fieldName;

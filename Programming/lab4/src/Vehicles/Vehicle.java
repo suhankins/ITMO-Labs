@@ -6,7 +6,6 @@ import java.util.Enumeration;
 import assemblyline.utils.ValueOutOfRangeException;
 import assemblyline.utils.NotEmptyException;
 import assemblyline.utils.NotNullException;
-import assemblyline.utils.ErrorMessages;
 import assemblyline.utils.IO;
 
 public class Vehicle implements Comparable<Vehicle> {
@@ -90,28 +89,22 @@ public class Vehicle implements Comparable<Vehicle> {
     // =============== Check variable correctness ===============
     public static boolean isNameCorrect(String name) {
         if (name == null) return false;
-        if (name.isBlank()) return false;
-        return true;
+        return !name.isBlank();
     }
     public static boolean isCoordinatesCorrect(Coordinates coordinates) {
-        if (coordinates == null) return false;
-        return true;
+        return coordinates != null;
     }
     public static boolean isEnginePowerCorrect(int enginePower) {
-        if (enginePower <= 0) return false;
-        return true;
+        return enginePower > 0;
     }
     public static boolean isNumberOfWheelsCorrect(int numberOfWheels) {
-        if (numberOfWheels <= 0) return false;
-        return true;
+        return numberOfWheels > 0;
     }
     public static boolean isVehicleTypeCorrect(VehicleType vehicleType) {
-        if (vehicleType == null) return false;
-        return true;
+        return vehicleType != null;
     }
     public static boolean isFuelTypeCorrect(FuelType fuelType) {
-        if (fuelType == null) return false;
-        return true;
+        return fuelType != null;
     }
     // =============== Check variable correctness END ===============
 
@@ -171,7 +164,6 @@ public class Vehicle implements Comparable<Vehicle> {
 
     /**
      * Asks for user input to update given vehicle's fields.
-     * @param vehicle
      * @param ifLower only update fields if given value is lower
      */
     public void updateData(Hashtable<String, Object> listOfParams, boolean ifLower) {
@@ -275,9 +267,8 @@ public class Vehicle implements Comparable<Vehicle> {
 
     @Override
     public String toString() {
-        String toReturn = String.format("%s - %s #%d%nFuel type: %s%nLocation: %s%nEngine Power: %d%nNumber of wheels: %d%nCreation date: %s",
-            this.name, this.type, this.id, this.fuelType, this.coordinates.toString(), this.enginePower, this.numberOfWheels, this.creationDate.toString());
 
-        return toReturn;
+        return String.format("%s - %s #%d%nFuel type: %s%nLocation: %s%nEngine Power: %d%nNumber of wheels: %d%nCreation date: %s",
+            this.name, this.type, this.id, this.fuelType, this.coordinates.toString(), this.enginePower, this.numberOfWheels, this.creationDate.toString());
     }
 }
