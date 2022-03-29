@@ -494,3 +494,4 @@ small small
 5
 PLANE
 ELECTRICITY
+execute_script default.txt
