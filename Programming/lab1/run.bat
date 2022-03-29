@@ -1,1 +1,1 @@
-java -classpath .;Pokemon.jar info.Lab1
+java -classpath .;json-20211205.jar info.Lab1

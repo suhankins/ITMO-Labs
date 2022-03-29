@@ -1,1 +1,1 @@
-java -Dfile.encoding=UTF8 assemblyline.Main
+java -classpath .;json-20211205.jar assemblyline.Main %*

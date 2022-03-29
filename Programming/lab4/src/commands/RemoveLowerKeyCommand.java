@@ -4,8 +4,6 @@ import java.util.Enumeration;
 
 import assemblyline.VehicleCollection;
 
-import assemblyline.vehicles.Vehicle;
-
 import assemblyline.utils.ErrorMessages;
 import assemblyline.utils.IO;
 

@@ -15,21 +15,39 @@ public class Coordinates {
     private long y;
 
     //=============== Check variable correctness ===============
-    public static boolean isXCorrect(double x) {
-        if (x > MAX_X) return false;
-        return true;
-    }
 
+    /**
+     * Checks if X value is within allowed range
+     * @param x the X value
+     * @return whether value is within range or not
+     */
+    public static boolean isXCorrect(double x) {
+        return !(x > MAX_X);
+    }
+    /**
+     * Checks if Y value is within allowed range
+     * @param y the Y value
+     * @return whether value is within range or not
+     */
     public static boolean isYCorrect(long y) {
-        if (y > MAX_Y) return false;
-        return true;
+        return y <= MAX_Y;
     }
     //=============== Check variable correctness END ===============
     
     // =============== Access to variables methods ===============
+
+    /**
+     * Return X value
+     * @return X value
+     */
     public double getX() {
         return x;
     }
+
+    /**
+     * Return Y value
+     * @return Y value
+     */
     public long getY() {
         return y;
     }

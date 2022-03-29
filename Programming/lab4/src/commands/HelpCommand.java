@@ -17,7 +17,7 @@ public class HelpCommand extends Command {
                 IO.print("%s%n", keys.nextElement());
             }
         } else {
-            //commands can be lower case
+            //commands can be lowercase
             args[0] = args[0].toLowerCase();
             if (!doesCommandExist(args[0])) {
                 throw new CommandDoesNotExistException(args[0]);

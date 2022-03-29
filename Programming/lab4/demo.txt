@@ -1,0 +1,34 @@
+insert 9503
+destroyer panic
+-186.85848790864273
+-52
+84
+13
+HOVERBOARD
+ANTIMATTER
+insert 7953
+speed runner
+-41.258873755775674
+-239
+29
+18
+BOAT
+MANPOWER
+insert 2779
+driver writable
+72.76498902392656
+51
+19
+7
+HOVERBOARD
+ANTIMATTER
+insert 8276
+road writable
+239.74026072967854
+11
+59
+18
+HOVERBOARD
+ELECTRICITY
+execute_script default.txt
+execute_script default.txt

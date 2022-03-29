@@ -1,30 +1,22 @@
 package assemblyline.commands;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.Hashtable;
 
-import assemblyline.VehicleCollection;
-
-import assemblyline.vehicles.*;
-
-import assemblyline.utils.ErrorMessages;
-import assemblyline.utils.NoArgumentGivenException;
 import assemblyline.utils.CommandDoesNotExistException;
-import assemblyline.utils.FeatureNotImplementedException;
-import assemblyline.utils.IO;
-import assemblyline.utils.InputArguments;
+import assemblyline.utils.NoArgumentGivenException;
 
 /**
  * Class for commands
  */
-public class Command {
+public abstract class Command {
     /**
      * List of commands
      */
     private static Hashtable<String, Command> commandList = new Hashtable<String, Command>();
 
+    /**
+     * Used for history command. Stores last 12 successfully executed commands
+     */
     public static String[] history = new String[12];
 
     //Static initialization block
@@ -37,9 +29,8 @@ public class Command {
         commandList.put("remove_key", new RemoveKeyCommand());
         commandList.put("clear", new ClearCommand());
 
-        //TODO: these two
-        commandList.put("save", new Command());
-        commandList.put("execute_script", new Command());
+        commandList.put("save", new SaveCommand());
+        commandList.put("execute_script", new ExecuteScriptCommand());
 
         commandList.put("exit", new ExitCommand());
         commandList.put("history", new HistoryCommand());
@@ -51,6 +42,10 @@ public class Command {
         commandList.put("print_field_descending_number_of_wheels", new PrintFieldSortedCommand("Number of wheels", false));
     }
 
+    /**
+     * Gets the whole command list
+     * @return commandList
+     */
     public static Hashtable<String, Command> getCommandList() {
         return commandList;
     }
@@ -92,7 +87,7 @@ public class Command {
     /**
      * Checks if command exists
      * @param name command name
-     * @return 
+     * @return whether command exists or not
      */
     public static boolean doesCommandExist(String name) {
         return commandList.containsKey(name);
@@ -100,7 +95,7 @@ public class Command {
 
     /**
      * Checks if argument was given. Throws NoArgumentGivenException if not.
-     * @param args
+     * @param args arguments
      */
     public static void isArgumentGiven(String[] args) {
         if (args.length == 0) {
@@ -114,15 +109,11 @@ public class Command {
      * Execute the command
      * @param args arguments
      */
-    public void execute(String[] args) {
-        throw new FeatureNotImplementedException();
-    }
+    public abstract void execute(String[] args);
 
     /**
      * Get command's description
      * @return command description
      */
-    public String getHelp() {
-        return "No description.";
-    }
+    public abstract String getHelp();
 }
