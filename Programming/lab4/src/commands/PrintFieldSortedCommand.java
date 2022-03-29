@@ -9,10 +9,24 @@ import assemblyline.VehicleCollection;
 import assemblyline.utils.IO;
 import assemblyline.utils.ErrorMessages;
 
+/**
+ * Prints specified field in specified order
+ */
 public class PrintFieldSortedCommand extends Command {
+    /**
+     * Fieldname by which vehicles should be sorted
+     */
     private final String fieldName;
+    /**
+     * Whether we should sort in ascending or descending order
+     */
     private final boolean ascending;
 
+    /**
+     * Constructor
+     * @param fieldName Fieldname by which vehicles should be sorted
+     * @param ascending Whether we should sort in ascending or descending order
+     */
     public PrintFieldSortedCommand(String fieldName, boolean ascending) {
         this.fieldName = fieldName;
         this.ascending = ascending;

@@ -5,6 +5,9 @@ import assemblyline.VehicleCollection;
 
 import assemblyline.utils.InputArguments;
 
+/**
+ * Updates information about vehicle using inputArguments
+ */
 public class UpdateCommand extends Command {
     @Override
     public void execute(String[] args) {

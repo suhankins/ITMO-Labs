@@ -8,6 +8,9 @@ import assemblyline.VehicleCollection;
 import assemblyline.utils.IO;
 import assemblyline.utils.InputArguments;
 
+/**
+ * Inserts a new vehicle into vehicleCollection
+ */
 public class InsertCommand extends Command {
     @Override
     public void execute(String[] args) {

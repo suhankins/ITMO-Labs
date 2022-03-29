@@ -14,6 +14,9 @@ public abstract class Command {
      */
     private static Hashtable<String, Command> commandList = new Hashtable<String, Command>();
 
+    /**
+     * Used for history command. Stores last 12 successfully executed commands
+     */
     public static String[] history = new String[12];
 
     //Static initialization block
@@ -39,6 +42,10 @@ public abstract class Command {
         commandList.put("print_field_descending_number_of_wheels", new PrintFieldSortedCommand("Number of wheels", false));
     }
 
+    /**
+     * Gets the whole command list
+     * @return commandList
+     */
     public static Hashtable<String, Command> getCommandList() {
         return commandList;
     }

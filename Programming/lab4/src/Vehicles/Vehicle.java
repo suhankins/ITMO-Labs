@@ -146,9 +146,13 @@ public class Vehicle implements Comparable<Vehicle> {
         this.fuelType = fuelType;
     }
     /**
+     * Sets ID
      * This is only used for loading vehicles from JSON
      */
     public void setId(Integer id) {
+        if (id <= 0) {
+            throw new ValueOutOfRangeException();
+        }
         this.id = id;
         if (counter < id) {
             counter = id;

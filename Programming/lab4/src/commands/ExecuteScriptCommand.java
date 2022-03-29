@@ -2,6 +2,9 @@ package assemblyline.commands;
 
 import assemblyline.utils.FileManager;
 
+/**
+ * Executes script from a specified file
+ */
 public class ExecuteScriptCommand extends Command {
     @Override
     public void execute(String[] args) {

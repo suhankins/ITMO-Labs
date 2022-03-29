@@ -6,8 +6,7 @@ import java.util.Enumeration;
 import assemblyline.vehicles.Vehicle;
 
 /**
- * Here all vehicle are stored.
- * +Awsum methods for changing stuff and all that
+ * Class for storing all created vehicles
  */
 public class VehicleCollection {
     /**
@@ -15,6 +14,7 @@ public class VehicleCollection {
      */
     public static Hashtable<Integer, Vehicle> vehicleCollection = new Hashtable<Integer, Vehicle>();
     /**
+     * Vehicle collection initialization date
      * If null - vehicle collection was never initialized.
      */
     public static java.time.LocalDate initializationDate = null;
@@ -37,6 +37,10 @@ public class VehicleCollection {
         return null;
     }
 
+    /**
+     * Checks whether collection is empty or not
+     * @return true if collection is empty, false if it's not
+     */
     public static boolean isEmpty() {
         return vehicleCollection.size() == 0;
     }

@@ -43,7 +43,7 @@ public class FileManager {
         while (fileReader.hasNextLine()) {
             lines.add(fileReader.nextLine());
         }
-        IO.addScript(lines);
+        IO.addScript(lines, file);
         fileReader.close();
     }
     /**
