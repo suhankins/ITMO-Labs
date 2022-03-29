@@ -28,6 +28,9 @@ public class Main {
             IO.print("File loading routine is still not implemented! Implement it already, you idiot!%n");
         } catch (Exception exception) {
             IO.print(ErrorMessages.TEMPLATE, exception.getMessage());
+            //If there was some error with loading the collection, we better get rid of what we already loaded
+            VehicleCollection.vehicleCollection.clear();
+            VehicleCollection.initializationDate = null;
         }
 
         //=============== Initial message ===============

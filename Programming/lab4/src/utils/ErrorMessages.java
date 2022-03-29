@@ -28,4 +28,6 @@ public class ErrorMessages {
         String.format(TEMPLATE, "Unknown error.");
     public static final String FILE_NOT_READABLE =
         String.format(TEMPLATE, "File cannot be read.");
+    public static final String ID_ALREADY_EXISTS =
+        String.format(TEMPLATE, "Given ID already exists.");
 }

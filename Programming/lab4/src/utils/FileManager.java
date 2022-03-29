@@ -143,14 +143,19 @@ public class FileManager {
 
             Vehicle vehicle = new Vehicle(
                 (String)vehicleJSON.get("name"),
-                //I'm not sure...
                 new Coordinates(x, y),
                 (int)vehicleJSON.get("enginePower"),
                 (int)vehicleJSON.get("numberOfWheels"),
                 VehicleType.valueOf((String)vehicleJSON.get("vehicleType")),
                 FuelType.valueOf((String)vehicleJSON.get("fuelType"))
             );
-            vehicle.setId((Integer)vehicleJSON.get("id"));
+            Integer id = (Integer)vehicleJSON.get("id");
+            //If given ID already exists, we just skip this vehicle and continue on
+            if (VehicleCollection.getById(id) != null) {
+                IO.print(ErrorMessages.ID_ALREADY_EXISTS);
+                continue;
+            }
+            vehicle.setId(id);
             vehicle.setCreationDate(LocalDate.parse((String)vehicleJSON.get("creationDate")));
             VehicleCollection.vehicleCollection.put(
                 (int)vehicleJSON.get("key"),
