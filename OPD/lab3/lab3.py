@@ -1,5 +1,8 @@
-upper = 24
+#the higher - the more precise the result is, but it will take longer to calculate
+upper = 16
 bottom = upper * -1
+f = open("result.csv", "w")
+f.write("X,Y,Z,A,B\n")
 
 def prog(S,A,B):
     if S >= 0:
@@ -35,8 +38,8 @@ def lab3(X,Y,Z,A,B):
         R = R + temp
     else:
         return
-    #print("SUCCESS: {} {} {} {} {}".format(X,Y,Z,A,B))
-    print("{}\t{}\t{}".format(X,A,B))
+    f.write("{},{},{},{},{}\n".format(X,Y,Z,A,B))
+    #print("{}\t{}\t{}".format(X,A,B))
 
 def add(A,B):
     if A + B < bottom or A + B > upper:
@@ -46,8 +49,18 @@ def add(A,B):
 def sub(A,B):
     return add(A,B * -1)
 
+#Case 2 and 3
+#for A in range(bottom, 0):
+#    for X in range(A+1, 0):
+#        for B in range(bottom, upper + 1):
+#            lab3(X,1,1,A,B)
+
+#Case 4 and 5
 for A in range(bottom, 0):
     for X in range(A+1, 0):
-        for B in range(bottom, upper + 1):
-            lab3(X,1,1,A,B)
+        for Z in range(A+1, 0):
+            for B in range(bottom, upper + 1):
+                lab3(X,1,Z,A,B)
+
+f.close()
 
