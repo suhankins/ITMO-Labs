@@ -56,11 +56,19 @@ def sub(A,B):
 #            lab3(X,1,1,A,B)
 
 #Case 4 and 5
-for A in range(bottom, 0):
+#for A in range(bottom, 0):
+#    for X in range(A+1, 0):
+#        for Z in range(A+1, 0):
+#            for B in range(bottom, upper + 1):
+#                lab3(X,1,Z,A,B)
+
+#Case 4 and 5
+for A in range(bottom, -1):
     for X in range(A+1, 0):
-        for Z in range(A+1, 0):
-            for B in range(bottom, upper + 1):
-                lab3(X,1,Z,A,B)
+        for Y in range(A+1, 0):
+            for Z in range(A+1, 0):
+                for B in range(bottom, upper + 1):
+                    lab3(X,Y,Z,A,B)
 
 f.close()
 
