@@ -1,17 +1,41 @@
-a = [["u1-6"],
-["u6-10"]]
+import itertools
 
-b = [["u1-8", "u1-6"],
-["u2-6", "u1-10"]]
+a = ["u2-5", "u5-10", "u6-10", "u1-10", "u4-6", "u2-6", "u1-8", "u8-12", "u1-6"]
 
-#for i in b:
-#    for j in a:
-#        for u in j:
-#            if not (u in i):
-#                j.remove(u)
+b = [
+    ["u2-5", "u2-6", "u1-8", "u8-12", "u1-6"],
+["u2-5", "u2-6", "u1-8", "u8-12", "u2-8"],
+["u2-5", "u2-6", "u1-8", "u1-10", "u1-6"],
+["u2-5", "u2-6", "u1-8", "u1-10", "u2-8"],
+["u2-5", "u2-6", "u6-10", "u1-10", "u1-6"],
+["u2-5", "u5-10", "u6-10", "u1-10"],
+["u4-6", "u2-6", "u1-8", "u8-12", "u1-6"],
+["u4-6", "u2-6", "u1-8", "u8-12", "u2-8"],
+["u4-6", "u2-6", "u1-8", "u1-10", "u1-6"],
+["u4-6", "u2-6", "u1-8", "u1-10", "u2-8"],
+["u4-6", "u2-6", "u6-10", "u1-10", "u1-6"],
+["u4-6", "u4-11", "u6-10"],
+["u4-11", "u5-10", "u6-10"]
 
-for line in range(len(a)):
-    print("ψ" + str(line + 1) + " " + str(a[line]).replace("'", ""))
+]
+
+for i in range(len(b)):
+    for j in range(len(b[i]) - 1, -1, -1):
+        for u in a:
+            if b[i][j] == u:
+                del(b[i][j])
+                break
+
+for i in range(len(b) - 1, -1, -1):
+    if len(b[i]) == 0:
+        del(b[i])
+
+b.sort()
+
+b = list(k for k,_ in itertools.groupby(b))
+
+for line in range(len(b)):
+    print("ψ" + str(line + 1) + " " + str(b[line]).replace("'", ""))
 
 for line in range(len(a)):
     print("")
