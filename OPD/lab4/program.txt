@@ -1,0 +1,31 @@
+57C 0200 ; CLR    ; Initialization
+57D E551 ; ST 552 ; counter
+57E A553 ; LD 553 ; copying pointer to the beginning
+57F E552 ; ST 552 ; storing copy of a pointer to the beginning
+
+57E 1205 ; IN 5     ; Reading REG 5
+57F 2F40 ; AND 0x40 ; Checking "ready" bit
+580 F0FD ; BEQ S1   ; If not ready - keep waiting
+
+581 1204 ; IN #5 ; Resetting ready flag
+
+582 A8D0 ; LD (IP - 30) ; loading current "symbol"
+583 0C00 ; PUSH         ; pushing symbol into stack
+584 A552 ; LD 552       ; loading counter
+585 0580 ; ASR          ; shifting counter to the right
+586 F4XX ; BHIS         ; if odd number - skip incrementing pointer
+587 A553 ; LD 553       ; loading pointer to beginning
+588 0700 ; INC          ; inc pointer
+589 E553 ; ST 553       ; storing our incremented pointer
+582 A554 ; LD 554
+583 1306 ; OUT #6
+584 0100
+
+551 COUNTER
+552 COPY OF A POINTER
+553 0554 ; pointer to the beginning
+554 0007 ; length
+555 D2F0
+556 D7C9
+557 D4C5
+558 0021
