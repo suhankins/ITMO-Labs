@@ -17,7 +17,7 @@ READY:		IN 7			; keys pressed i guess?
 			BEQ READY		; if not, keep waiting
 			IN 6			; resetting ready flag
 
-PRINT:    	LD COUNTER
+			LD COUNTER
 			ASR				; if we have carry flag - odd counter
 			LD (PTRCOPY)
 			BCC AFTER_SW
