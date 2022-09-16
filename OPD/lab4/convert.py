@@ -1,4 +1,4 @@
-line = "Привет!"
+line = input()
 indexTable = {
     "ю": "C0",
     "а": "C1",
@@ -70,6 +70,7 @@ indexTable = {
 }
 
 line = list(line)
+print(hex(len(line)))
 result = []
 for i in line:
     if i in indexTable:
@@ -84,10 +85,9 @@ for i in range(0, len(result), 2):
     result[i] = result[i+1]
     result[i+1] = temp
 
-#print(result)
-
 ptr = 0x555
 
 for i in range(0, len(result), 2):
-    print(str(hex(ptr)).replace("0x", "") + " " + result[i] + result[i+1])
+    #print(hex(ptr), end=" ")
+    print(result[i] + result[i+1], end=", ")
     ptr = ptr + 1
